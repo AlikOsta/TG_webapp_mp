@@ -1,12 +1,36 @@
-<!doctype html>
+{% extends 'layout/basic.html' %}
+{% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
-</head>
-<body>
-    <h1>{{ title }}</h1>
+{%  block link%}
+    <link rel="stylesheet" type="text/css" href="{% static 'main/card.css' %}">
+{% endblock %}
 
+{%  block content%}
+    <h1>Добавить объявления</h1>
 
-</body>
-</html>
+    <form enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        {% for hidden in from.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+        {% if from.non_field_errors %}
+        <ul>
+            {% for error in form.non_field_errors %}
+            <li><em>{{ error|escape }}</em></li>
+            {% endfor %}
+        </ul>
+        {% endif%}
+        {% for field in form.visible_fields %}
+            {% if field.errors %}
+            <ul>
+                {% for error in field.errors %}
+                <li><em>{{ error|escape }}</em></li>
+                {% endfor %}
+            </ul>
+            {% endif%}
+            <p>{{ field.label_tag }}<br>{{ field }}<br>
+            {{ field.help_text }}</p>
+        {% endfor %}
+        <p><input type="submit" value="Добавить"></p>
+    </form>
+{%  endblock %}

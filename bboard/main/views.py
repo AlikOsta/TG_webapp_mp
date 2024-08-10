@@ -35,7 +35,12 @@ def user(request):
     return render(request, 'main/user.html', context=data)
 
 
-def detail(request, rubric_pk, pk):
+def favorites(request):
+    data = {'title' : 'favorites'}
+    return render(request, 'main/favorites.html', context=data)
+
+
+def detail(request, pk):
     bb = get_object_or_404(Bb, pk=pk)
 
     context = {'bb': bb,}
