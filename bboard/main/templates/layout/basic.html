@@ -1,0 +1,67 @@
+{% load static %}
+
+
+<!DOCTTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/basic.css' %}">
+    {% block link %}{% endblock %}
+    
+</head>
+
+<body>
+
+    <section>
+        {% block content %}{% endblock %}
+    </section>
+
+    <footer class="bb_footer">
+        <div class="wr_footer">
+            <a href="#">
+                <div class="btn_footer"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30"
+                        viewBox="0 0 30 30">
+                        <path
+                            d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z">
+                        </path>
+                    </svg>
+                </div>
+            </a>
+            <a href="#">
+                <div class="btn_footer"><svg width="30" height="30" viewBox="0 0 30 30"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M10.2857 5.5C12.2412 5.5 13.9599 6.45902 15 7.93543C16.0401 6.45902 17.7588 5.5 19.7143 5.5C23.2398 5.5 26 8.39223 26 11.7857C26 13.5642 25.2366 15.0595 24.2687 16.1484C24.2536 16.1653 24.238 16.1818 24.2219 16.1977L15.7362 24.5787C15.3281 24.9817 14.6719 24.9817 14.2638 24.5787L5.77351 16.1932C4.74119 15.1608 4 13.5334 4 11.7857C4 8.26022 6.89223 5.5 10.2857 5.5Z">
+                        </path>
+                    </svg></div>
+            </a>
+            <a href="#">
+                <div class="btn_footer"><svg width="30" height="30" viewBox="0 0 30 30"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <rect x="5" y="6" width="20" height="11" rx="1"></rect>
+                        <rect x="6" y="19" width="11" height="2" rx="1"></rect>
+                        <rect x="6" y="23" width="9" height="2" rx="1"></rect>
+                        <rect x="18" y="23" width="8" height="2" rx="1"></rect>
+                        <rect x="23" y="20" width="8" height="2" rx="1" transform="rotate(90 23 20)"></rect>
+                    </svg></div>
+            </a>
+            <a href="#">
+                <div class="btn_footer"><svg width="30" height="30" viewBox="0 0 30 30"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M16.8495 16C17.5672 16 18.1629 16 18.6524 16.0381C19.1634 16.0778 19.6341 16.1631 20.0867 16.3739C20.7647 16.6896 21.3406 17.1891 21.749 17.8156C22.0216 18.2338 22.1726 18.6877 22.2843 19.188C22.3912 19.6672 22.4754 20.2569 22.5769 20.9674L22.99 23.8586C23.031 24.1456 22.9454 24.4362 22.7555 24.6552C22.5655 24.8742 22.2899 25 22 25H8.00001C7.71012 25 7.43449 24.8742 7.24455 24.6552C7.05462 24.4362 6.96906 24.1456 7.01006 23.8586L7.42309 20.9674C7.52457 20.2569 7.6088 19.6672 7.71574 19.188C7.82737 18.6877 7.97837 18.2338 8.25103 17.8156C8.65945 17.1891 9.23533 16.6896 9.9133 16.3739C10.3659 16.1631 10.8366 16.0778 11.3476 16.0381C11.8372 16 12.4328 16 13.1505 16H16.8495Z">
+                        </path>
+                        <path
+                            d="M15 14C17.4853 14 19.5 11.9853 19.5 9.5C19.5 7.01472 17.4853 5 15 5C12.5147 5 10.5 7.01472 10.5 9.5C10.5 11.9853 12.5147 14 15 14Z">
+                        </path>
+                    </svg></div>
+            </a>
+        </div>
+    </footer>
+
+</body>
+</html>

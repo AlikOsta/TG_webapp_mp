@@ -1,0 +1,23 @@
+.bb_footer{
+    width: 100%;
+    height: 40px;
+}
+
+.wr_footer {
+  width: 100%;
+  height: 40px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-around;
+    background-color: #d0d0d0;
+}
+
+.btn_footer {
+    padding: 5px;
+  min-width: 80px;
+  height: 40px;
+  text-align: center;
+  z-index: 1;
+}
