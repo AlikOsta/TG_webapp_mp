@@ -1,12 +1,14 @@
-<!doctype html>
-
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
-</head>
-<body>
-    <h1>{{ title }}</h1>
+{% extends 'layout/basic.html' %}
+{% load static %}
 
 
-</body>
-</html>
+{%  block content%}
+
+    <div>
+        <p class="title_card"> {{ title }}</p>
+        <p class="pra_card"> {{ bbs }} </p>
+        <p class="date_card"> {{ rubrics }} </p>
+    </div>
+    
+
+{%  endblock %}

@@ -1,16 +1,26 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from .models import Bb, Rubric
 
 
 def index(request):
+    bbs = "Bb.objects.all()"
+    rubrics = "Rubric.objects.all()"
     data = {
-        'title' : 'Главная страница',
-
+        'title': 'Главная страница',
+        'bbs': bbs,
+        'rubrics': rubrics,
     }
     return render(request, 'main/index.html', context=data)
 
 
 def by_rubric(request):
-    data = {'title' : 'Рубрики'}
+    rubric = "get_object_or_404(Rubric, pk=pk)"
+    bbs = "Bb.objects.filter(rubric=pk)"
+    data = {
+        'title': 'Рубрики',
+        'bbs': bbs,
+        'rubrics': rubric,
+    }
     return render(request, 'main/by_rubric.html', context=data)
 
 

@@ -21,7 +21,8 @@ class Bb(models.Model):
 
 class Rubric(models.Model):
     name = models.CharField(max_length=20, db_index=True, verbose_name="Название")
-    published = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Создание')
+    order = models.SmallIntegerField(default=0, db_index=True, verbose_name='Порядок')
+
 
     def __str__(self):
         return self.name
@@ -29,4 +30,4 @@ class Rubric(models.Model):
     class Meta:
         verbose_name_plural = "Рубрики"
         verbose_name = "Рубрика"
-        ordering = ['published']
+        ordering = ['order']
