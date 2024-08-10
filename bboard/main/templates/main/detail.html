@@ -1,12 +1,17 @@
-<!doctype html>
-
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
-</head>
-<body>
-    <h1>{{ title }}</h1>
+{% extends "layout/basic.html" %}
+{% load static %}
 
 
-</body>
-</html>
+{% block content %}
+
+<div>
+    <h2>{{ bb.title }}</h2>
+    <p>Описание: {{ bb.content }}</p>
+    <p >Цена: {{ bb.price }} руб.</p>
+    <p >Категория: {{ bb.rubric }}</p>
+    <p>Продавец: {{ bb.contacts }}</p>
+    <p>В продаже: {{ bb.is_active }}</p>
+    <p>Добавлено {{  bb.published|date:"d.m.Y" }}</p>
+</div>
+
+{% endblock %}

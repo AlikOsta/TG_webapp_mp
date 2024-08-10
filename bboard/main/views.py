@@ -37,8 +37,8 @@ def user(request):
 
 def detail(request, rubric_pk, pk):
     bb = get_object_or_404(Bb, pk=pk)
-    ais = bb.additionalimage_set.all()
-    context = {'bb': bb, 'ais': ais}
+
+    context = {'bb': bb,}
     return render(request, 'main/detail.html', context)
 
 
