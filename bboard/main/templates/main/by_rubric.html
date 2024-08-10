@@ -1,12 +1,34 @@
-<!doctype html>
-
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
-</head>
-<body>
-    <h1>{{ title }}</h1>
+{% extends 'layout/basic.html' %}
+{% load static %}
 
 
-</body>
-</html>
+{%  block link%}
+<link rel="stylesheet" type="text/css" href="{% static 'main/card.css' %}">
+{% endblock %}
+
+
+{%  block content%}
+
+<h2>{{ rubric.name }}</h2>
+
+    <div class="wr_content">
+        <div class="wr_card">
+            {% if bbs %}
+                {% for bb in bbs %}
+                    {% url 'detail' rubric_pk=rubric.pk pk=bb.pk as url %}
+                    <a href="{{ url }}{{ all }}">
+                        <div class="card">
+                            <div>
+                                <p class="title_card">{{ bb.title }}</p>
+                                <p class="pra_card">{{ bb.price }} руб.</p>
+                                <p class="date_card">{{ bb.published|date:"d.m.Y" }}</p>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+
+{%  endblock %}

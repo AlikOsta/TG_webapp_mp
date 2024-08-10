@@ -1,13 +1,17 @@
 
 from django.urls import path
-from . import views
+from django.conf.urls.static import static
 
-app_name = 'main'
+from .views import index, by_rubric, BbCreateView, detail, user
+
+
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('user/', views.user, name='user'),
-    path('create/', views.create, name='create'),
-    path('detail/', views.detail, name='detail'),
-    path('rubric/', views.by_rubric, name='by_rubric'),
+    path("add/", BbCreateView.as_view(), name="add"),
+    path('<int:rubric_pk>/id-<int:pk>', detail, name="detail"),
+    path('<int:pk>/', by_rubric, name='by_rubric'),
+    path('', index, name='index'),
+    path('user/', user, name='user'),
 
 ]
+
+

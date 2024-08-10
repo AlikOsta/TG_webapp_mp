@@ -12,7 +12,7 @@
 <div class="wr_container">
     <div class="container">
         {% for rubric in rubrics %}
-           <a href="#">
+           <a href="{% url 'by_rubric' rubric.id %}">
                 <section class="child">
                     <div class="title_rub">{{ rubric.name }}</div>
                 </section>
@@ -25,7 +25,8 @@
 <div class="wr_content">
     <div class="wr_card">
         {% for bb in bbs %}
-            <a class="link_card" href="#">
+            {% url 'detail' rubric_pk=bb.rubric.pk pk=bb.pk as url %}
+                <a class="link_card" href="{{ url }}">
                 <div class="card">
                     <p class="title_card">{{ bb.title }}</p>
                     <p class="pra_card">{{ bb.price }} руб.</p>
