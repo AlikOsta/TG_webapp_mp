@@ -1,11 +1,26 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    data = {'title' : 'Главная страница'}
+    return render(request, 'main/index.html', data)
 
 
 def by_rubric(request):
-    return HttpResponse("Hello, world. You're at the polls by rubric.")
+    data = {'title' : 'Рубрики'}
+    return render(request, 'main/by_rubric.html', data)
 
+
+def user(request):
+    data = {'title' : 'Пользователь'}
+    return render(request, 'main/user.html', data)
+
+
+def detail(request):
+    data = {'title' : 'Детали товара'}
+    return render(request, 'main/detail.html', data)
+
+
+def create(request):
+    data = {'title' : 'Новое объявление'}
+    return render(request, 'main/create.html', data)
