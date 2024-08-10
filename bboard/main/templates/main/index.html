@@ -1,14 +1,39 @@
 {% extends 'layout/basic.html' %}
 {% load static %}
 
+<!--подключаем дополнительные стили-->
+{%  block link%}
+    <link rel="stylesheet" type="text/css" href="{% static 'main/card.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/slide_rubric.css' %}">
+{% endblock %}
 
 {%  block content%}
-
-    <div>
-        <p class="title_card"> {{ title }}</p>
-        <p class="pra_card"> {{ bbs }} </p>
-        <p class="date_card"> {{ rubrics }} </p>
+<!--шапка с рубриками-->
+<div class="wr_container">
+    <div class="container">
+        {% for rubric in rubrics %}
+           <a href="#">
+                <section class="child">
+                    <div class="title_rub">{{ rubric.name }}</div>
+                </section>
+            </a>
+        {% endfor %}
     </div>
-    
+</div>
+
+<!--карточки с товаром-->
+<div class="wr_content">
+    <div class="wr_card">
+        {% for bb in bbs %}
+            <a class="link_card" href="#">
+                <div class="card">
+                    <p class="title_card">{{ bb.title }}</p>
+                    <p class="pra_card">{{ bb.price }} руб.</p>
+                    <p class="date_card">{{ bb.published|date:"d.m.Y" }}</p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+</div>
 
 {%  endblock %}

@@ -3,8 +3,8 @@ from .models import Bb, Rubric
 
 
 def index(request):
-    bbs = "Bb.objects.all()"
-    rubrics = "Rubric.objects.all()"
+    bbs = Bb.objects.all()
+    rubrics = Rubric.objects.all()
     data = {
         'title': 'Главная страница',
         'bbs': bbs,
