@@ -1,0 +1,100 @@
+
+/* Стили карточек с товаром */
+.wr_content {
+    padding: 0 10px;
+}
+
+.wr_card {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
+    gap: 20px;
+
+}
+
+.card {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    display: flex;
+    gap: 20px;
+    overflow: hidden;
+}
+
+.title_card {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 250px;
+    display: block;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.pra_card {
+    font-size: 18px;
+    color: #007bff;
+    margin: 0;
+    margin-bottom: 10px;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 200px;
+    display: block;
+}
+
+.content_card {
+    font-size: 14px;
+    color: #333;
+    margin: 0;
+    margin-bottom: 10px;
+    /*white-space: nowrap;*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 300px;
+    display: block;
+}
+
+.date_card {
+    font-size: 14px;
+    color: #999;
+    margin: 0;
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+}
+
+.img_card {
+  width: 25%;
+}
+
+/* Адаптивные стили */
+@media (max-width: 600px) {
+    .child {
+        min-width: 90px;
+        padding: 8px;
+    }
+
+    .wr_card {
+        grid-template-columns: 1fr;
+    }
+
+    .title_card {
+        font-size: 20px;
+
+    }
+
+    .pra_card {
+        font-size: 16px;
+    }
+
+    .date_card {
+        font-size: 10px;
+    }
+}

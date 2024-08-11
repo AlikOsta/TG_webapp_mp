@@ -1,15 +1,16 @@
-
 .container {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
-  width: 370px;
+  width: 95%;
   height: 150px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   display: flex;
   scroll-behavior: smooth;
-  border-radius: 10px;
-  margin: 10px auto;
+  border-radius: 8px;
+  margin: 20px auto;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .container::-webkit-scrollbar {
@@ -18,46 +19,34 @@
 
 .child {
   scroll-snap-align: start;
-  width: 370px;
+  width: 95vw;
   height: 150px;
   flex-shrink: 0;
   display: flex;
-  background-color: #f0f0f0;
+  background-color: #f7f7f7;
   position: relative;
-   align-items: center;
+  align-items: center;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 .img_rub {
-  width: 370px;
-  height: 150px;
+  width: 100%;
+  height: 100%;
   position: absolute;
   bottom: 0;
   right: 0;
-  border: none;
+  object-fit: cover;
 }
 
-.title_rub{
-    width: 120px;
-    margin-left: 30px;
-   font-size: 32px;
+.title_rub {
+  width: 150px;
+  margin-left: 20px;
+  font-size: 28px;
   z-index: 1;
+  color: #333;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-@media (min-width: 500px){
-  .title_rub{
-    font-size: 35px;
-  }
 
-  .container {
-    width: 500px;
-    height: 180px;
-  }
-  .child {
-    width: 500px;
-    height: 180px;
-  }
-  .img_rub {
-    width: 500px;
-    height: 180px;
-  }
-}

@@ -1,11 +1,16 @@
 {% extends "layout/basic.html" %}
 {% load static %}
 
+{%  block link%}
+<link rel="stylesheet" type="text/css" href="{% static 'main/detail.css' %}">
+{% endblock %}
 
 {% block content %}
 
-<div>
-    <h2>{{ bb.title }}</h2>
+<div class="wr_detail">
+
+    <h1>{{ bb.title }}</h1>
+    <img class="img_card" src="{% static '/main/no_photo_bb.png' %}" alt="Placeholder image">
     <p>Описание: {{ bb.content }}</p>
     <p >Цена: {{ bb.price }} руб.</p>
     <p >Категория: {{ bb.rubric }}</p>

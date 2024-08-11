@@ -3,13 +3,13 @@
 
 
 {%  block link%}
-<link rel="stylesheet" type="text/css" href="{% static 'main/card.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'main/index.css' %}">
 {% endblock %}
 
 
 {%  block content%}
 
-<h2>{{ rubric.name }}</h2>
+<h1> rubric.name </h1>
 
     <div class="wr_content">
         <div class="wr_card">
@@ -18,9 +18,11 @@
                     {% url 'detail' rubric_pk=rubric.pk pk=bb.pk as url %}
                     <a href="{{ url }}{{ all }}">
                         <div class="card">
+                            <img class="img_card" src="{% static '/main/no_photo_bb.png' %}" alt="Placeholder image">
                             <div>
                                 <p class="title_card">{{ bb.title }}</p>
                                 <p class="pra_card">{{ bb.price }} руб.</p>
+                                <p class="content_card">{{ bb.content }}</p>
                                 <p class="date_card">{{ bb.published|date:"d.m.Y" }}</p>
                             </div>
                         </div>

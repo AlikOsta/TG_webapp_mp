@@ -10,7 +10,6 @@ def index(request):
     bbs = Bb.objects.all()
     rubrics = Rubric.objects.all()
     data = {
-        'title': 'Главная страница',
         'bbs': bbs,
         'rubrics': rubrics,
     }
@@ -22,10 +21,8 @@ def by_rubric(request, pk):
     bbs = Bb.objects.filter(rubric=pk)
 
     data = {
-        'title': 'Рубрики',
         'bbs': bbs,
         'rubrics': rubric,
-
     }
     return render(request, 'main/by_rubric.html', context=data)
 
@@ -40,10 +37,9 @@ def favorites(request):
     return render(request, 'main/favorites.html', context=data)
 
 
-def detail(request, pk):
+def detail(request, rubric_pk, pk):
     bb = get_object_or_404(Bb, pk=pk)
-
-    context = {'bb': bb,}
+    context = {'bb': bb}
     return render(request, 'main/detail.html', context)
 
 
