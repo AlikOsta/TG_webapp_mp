@@ -6,6 +6,7 @@ from django.contrib.auth.models import AbstractUser
 
 class Bb(models.Model):
     rubric = models.ForeignKey('Rubric', null=True, on_delete=models.PROTECT, verbose_name='Рубрика')
+    currency = models.ForeignKey('Сurrency', null=True, on_delete=models.PROTECT, verbose_name='Валюта')
     title = models.CharField(max_length=30, verbose_name='Товар')
     content = models.TextField(null=True, max_length=150, blank=True, verbose_name='Описание')
     price = models.IntegerField(default=0, null=True, blank=True, verbose_name='Цена')
@@ -38,6 +39,18 @@ class Rubric(models.Model):
     class Meta:
         verbose_name_plural = "Рубрики"
         verbose_name = "Рубрика"
+        ordering = ['order']
+
+class Сurrency(models.Model):
+    name = models.CharField(max_length=20, db_index=True, verbose_name="Название")
+    order = models.SmallIntegerField(default=0, db_index=True, verbose_name='Порядок')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Валюты"
+        verbose_name = "Валюта"
         ordering = ['order']
 
 

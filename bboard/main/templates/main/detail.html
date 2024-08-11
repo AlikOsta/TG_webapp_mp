@@ -12,7 +12,7 @@
     <h1>{{ bb.title }}</h1>
     <img class="img_card" src="{% static '/main/no_photo_bb.png' %}" alt="Placeholder image">
     <p>Описание: {{ bb.content }}</p>
-    <p >Цена: {{ bb.price }} руб.</p>
+    <p >Цена: {{ bb.price }} {{ bb.currency }}</p>
     <p >Категория: {{ bb.rubric }}</p>
     <p>Продавец: {{ bb.contacts }}</p>
     <p>В продаже: {{ bb.is_active }}</p>

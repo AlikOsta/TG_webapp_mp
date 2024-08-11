@@ -20,7 +20,7 @@
                             <img class="img_card" src="{% static '/main/no_photo_bb.png' %}" alt="Placeholder image">
                             <div>
                                 <p class="title_card">{{ bb.title }}</p>
-                                <p class="pra_card">{{ bb.price }} руб.</p>
+                                <p class="pra_card">{{ bb.price }} {{ bb.currency }}</p>
                                 <p class="content_card">{{ bb.content }}</p>
                                 <p class="date_card">{{ bb.published|date:"d.m.Y" }}</p>
                             </div>
