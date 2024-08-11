@@ -22,7 +22,7 @@ def by_rubric(request, pk):
 
     data = {
         'bbs': bbs,
-        'rubrics': rubric,
+        'rubric': rubric,
     }
     return render(request, 'main/by_rubric.html', context=data)
 
