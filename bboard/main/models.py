@@ -13,7 +13,7 @@ class Bb(models.Model):
     is_active = models.BooleanField(default=True, verbose_name='Активно')
 
     def check_expiration(self) :
-        if self.published < timezone.now() - timedelta(days=1):
+        if self.published < timezone.now() - timedelta(days=28):
             self.is_active = False
             self.save()
 
