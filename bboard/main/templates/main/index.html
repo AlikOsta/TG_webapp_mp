@@ -3,8 +3,8 @@
 
 <!--подключаем дополнительные стили-->
 {%  block link%}
-    <link rel="stylesheet" type="text/css" href="{% static 'main/index.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'main/slide_rubric.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/CSS/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/CSS/slide_rubric.css' %}">
 {% endblock %}
 
 {%  block content%}
@@ -15,6 +15,7 @@
            <a href="{% url 'by_rubric' rubric.id %}">
                 <section class="child">
                     <div class="title_rub">{{ rubric.name }}</div>
+                    <img class="img_rub" src="{% static 'main/img_cat/cat_' %}{{ rubric.order }}.png">
                 </section>
             </a>
         {% endfor %}
@@ -31,8 +32,8 @@
                         <img class="img_card" src="{% static '/main/no_photo_bb.png' %}" alt="Placeholder image">
                         <div>
                             <p class="title_card">{{ bb.title }}</p>
-                            <p class="pra_card">{{ bb.price }} руб.</p>
                             <p class="content_card">{{ bb.content }}</p>
+                            <p class="pra_card">{{ bb.price }} руб.</p>
                             <p class="date_card">{{ bb.published|date:"d.m.Y" }}</p>
                         </div>
                     </div>

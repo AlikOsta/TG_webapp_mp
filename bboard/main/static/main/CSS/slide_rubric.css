@@ -2,7 +2,7 @@
   font-size: 22px;
   font-weight: 700;
   width: 95%;
-  height: 150px;
+  height: 120px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   display: flex;
@@ -20,7 +20,7 @@
 .child {
   scroll-snap-align: start;
   width: 95vw;
-  height: 150px;
+  height: 120px;
   flex-shrink: 0;
   display: flex;
   background-color: #f7f7f7;
