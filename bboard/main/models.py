@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from datetime import timedelta
+from django.contrib.auth.models import AbstractUser
 
 
 class Bb(models.Model):
@@ -38,3 +39,10 @@ class Rubric(models.Model):
         verbose_name_plural = "Рубрики"
         verbose_name = "Рубрика"
         ordering = ['order']
+
+
+# class AdvUser(AbstractUser):
+#     pass
+#
+#     class Meta(AbstractUser.Meta):
+#         pass

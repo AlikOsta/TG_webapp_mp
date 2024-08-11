@@ -6,7 +6,7 @@
 
 .wr_card {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
+    grid-template-columns: 1fr;
     gap: 20px;
 
 }
@@ -75,27 +75,27 @@
   width: 30%;
 }
 
-/* Адаптивные стили */
-@media (max-width: 600px) {
-    .child {
-        min-width: 90px;
-        padding: 8px;
-    }
+/*!* Адаптивные стили *!*/
+/*@media (max-width: 600px) {*/
+/*    .child {*/
+/*        min-width: 90px;*/
+/*        padding: 8px;*/
+/*    }*/
 
-    .wr_card {
-        grid-template-columns: 1fr;
-    }
+/*    .wr_card {*/
+/*        grid-template-columns: 1fr;*/
+/*    }*/
 
-    .title_card {
-        font-size: 20px;
+/*    .title_card {*/
+/*        font-size: 20px;*/
 
-    }
+/*    }*/
 
-    .pra_card {
-        font-size: 16px;
-    }
+/*    .pra_card {*/
+/*        font-size: 16px;*/
+/*    }*/
 
-    .date_card {
-        font-size: 10px;
-    }
-}
+/*    .date_card {*/
+/*        font-size: 10px;*/
+/*    }*/
+/*}*/
