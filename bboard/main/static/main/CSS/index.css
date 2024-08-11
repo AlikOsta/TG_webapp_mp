@@ -72,7 +72,8 @@
 }
 
 .img_card {
-  width: 30%;
+  width: 30vw;
+    max-height: 125px;
 }
 
 /*!* Адаптивные стили *!*/
