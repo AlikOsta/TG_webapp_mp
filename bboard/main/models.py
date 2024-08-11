@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+from datetime import timedelta
 
 
 class Bb(models.Model):
@@ -7,6 +9,12 @@ class Bb(models.Model):
     content = models.TextField(null=True, max_length=150, blank=True, verbose_name='Описание')
     price = models.IntegerField(default=0, null=True, blank=True, verbose_name='Цена')
     published = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Опубликовано')
+    is_active = models.BooleanField(default=True, verbose_name='Активно')
+
+    def check_expiration(self) :
+        if self.published < timezone.now() - timedelta(days=1):
+            self.is_active = False
+            self.save()
 
     def delete(self, *args, **kwargs):
         for ai in self.additionalimage_set.all():

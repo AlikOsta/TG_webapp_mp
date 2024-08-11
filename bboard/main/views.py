@@ -8,6 +8,9 @@ from .forms import BbForm
 
 def index(request):
     bbs = Bb.objects.all()
+    for bb in bbs:
+        bb.check_expiration()
+    bbs = Bb.objects.filter(is_active=True)
     rubrics = Rubric.objects.all()
     data = {
         'bbs': bbs,
@@ -16,13 +19,16 @@ def index(request):
     return render(request, 'main/index.html', context=data)
 
 
-def by_rubric(request, pk):
+def by_rubric(request, pk) :
     rubric = get_object_or_404(Rubric, pk=pk)
     bbs = Bb.objects.filter(rubric=pk)
+    for bb in bbs :
+        bb.check_expiration()
+    bbs = bbs.filter(is_active=True)
 
     data = {
-        'bbs': bbs,
-        'rubric': rubric,
+        'bbs' : bbs,
+        'rubric' : rubric,
     }
     return render(request, 'main/by_rubric.html', context=data)
 
@@ -39,9 +45,11 @@ def favorites(request):
 
 def detail(request, rubric_pk, pk):
     bb = get_object_or_404(Bb, pk=pk)
+    bb.check_expiration()
+    if not bb.is_active:
+        return render(request, 'main/404.html', status=404)  # Или другой шаблон для неактивных объявлений
     context = {'bb': bb}
     return render(request, 'main/detail.html', context)
-
 
 class BbCreateView(CreateView):
     template_name = "main/create.html"

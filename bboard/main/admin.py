@@ -4,7 +4,7 @@ from .models import Bb, Rubric
 
 
 class BbAdmin(admin.ModelAdmin):
-    list_display = ('title', 'content', 'price', 'published', 'rubric')
+    list_display = ('title', 'content', 'price', 'published', 'rubric', "is_active")
     list_display_links = ('title', 'content', )
     search_fields = ('title', 'content', )
 
