@@ -10,7 +10,6 @@
   border-radius: 8px;
   margin: 20px auto;
   background-color: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .container::-webkit-scrollbar {
@@ -27,13 +26,11 @@
   position: relative;
   align-items: center;
   border-radius: 8px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
 .img_rub {
-  width: 100%;
-  height: 100%;
+  width: 400px;
   position: absolute;
   bottom: 0;
   right: 0;
@@ -46,7 +43,6 @@
   font-size: 28px;
   z-index: 1;
   color: #333;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 
