@@ -85,6 +85,18 @@ class City(models.Model):
         unique_together = ['country', 'name']  # Обеспечивает уникальность города в рамках одной страны
 
 
+class AdditionalImage(models.Model):
+    bb = models.ForeignKey('Bb', on_delete=models.CASCADE, related_name='additional_images', verbose_name='Объявление')
+    image = models.ImageField(upload_to='images/', verbose_name='Изображение')
+
+    def __str__(self):
+        return f"Изображение для {self.bb.title}"
+
+    class Meta:
+        verbose_name_plural = "Дополнительные изображения"
+        verbose_name = "Дополнительное изображение"
+
+
 
 # class AdvUser(AbstractUser):
 #     pass

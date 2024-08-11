@@ -17,7 +17,15 @@
                     {% url 'detail' rubric_pk=rubric.pk pk=bb.pk as url %}
                     <a href="{{ url }}{{ all }}">
                         <div class="card">
-                            <img class="img_card" src="{% static '/main/no_photo_bb.png' %}" alt="Placeholder image">
+                           {% if bb.additional_images.exists %}
+                            <div class="image-gallery">
+                                {% for image in bb.additional_images.all %}
+                                    <img class="img_card" src="{{ image.image.url }}" alt="Additional image">
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <img class="img_card" src="{% static 'main/no_photo_bb.png' %}" alt="Placeholder image">
+                        {% endif %}
                             <div>
                                 <p class="title_card">{{ bb.title }}</p>
                                 <p class="content_card">{{ bb.content }}</p>

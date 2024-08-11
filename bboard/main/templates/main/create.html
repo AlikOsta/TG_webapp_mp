@@ -5,21 +5,21 @@
     <link rel="stylesheet" type="text/css" href="{% static 'main/CSS/create.css' %}">
 {% endblock %}
 
-{%  block content%}
-    <h1>Добавить объявления</h1>
+{% block content %}
+    <h1>Добавить объявление</h1>
 
     <form enctype="multipart/form-data" method="post">
         {% csrf_token %}
-        {% for hidden in from.hidden_fields %}
+        {% for hidden in form.hidden_fields %}
             {{ hidden }}
         {% endfor %}
-        {% if from.non_field_errors %}
+        {% if form.non_field_errors %}
         <ul>
             {% for error in form.non_field_errors %}
             <li><em>{{ error|escape }}</em></li>
             {% endfor %}
         </ul>
-        {% endif%}
+        {% endif %}
         {% for field in form.visible_fields %}
             {% if field.errors %}
             <ul>
@@ -27,10 +27,10 @@
                 <li><em>{{ error|escape }}</em></li>
                 {% endfor %}
             </ul>
-            {% endif%}
+            {% endif %}
             <p>{{ field.label_tag }}<br>{{ field }}<br>
             {{ field.help_text }}</p>
         {% endfor %}
         <p><input type="submit" value="Добавить"></p>
     </form>
-{%  endblock %}
+{% endblock %}

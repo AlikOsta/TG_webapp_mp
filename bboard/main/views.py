@@ -60,3 +60,14 @@ class BbCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context['rubrics'] = Rubric.objects.all()
         return context
+
+
+def create_bb(request):
+    if request.method == 'POST':
+        form = BbForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('success_url')
+    else:
+        form = BbForm()
+    return render(request, 'create.html', {'form': form})

@@ -10,7 +10,17 @@
 <div class="wr_detail">
 
     <h1>{{ bb.title }}</h1>
-    <img class="img_card" src="{% static '/main/no_photo_bb.png' %}" alt="Placeholder image">
+    
+    {% if bb.additional_images.exists %}
+        <div class="image-gallery">
+            {% for image in bb.additional_images.all %}
+            <img class="img_card" src="{{ image.image.url }}" alt="Additional image">
+            {% endfor %}
+        </div>
+    {% else %}
+        <img class="img_card" src="{% static 'main/no_photo_bb.png' %}" alt="Placeholder image">
+    {% endif %}
+    
     <p>Описание: {{ bb.content }}</p>
     <p >Цена: {{ bb.price }} {{ bb.currency }}</p>
     <p >Категория: {{ bb.rubric }}</p>

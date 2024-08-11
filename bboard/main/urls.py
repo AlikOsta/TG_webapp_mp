@@ -1,4 +1,4 @@
-
+from bboard import settings
 from django.urls import path
 from django.conf.urls.static import static
 
@@ -14,5 +14,8 @@ urlpatterns = [
     path('favorites/', favorites, name='favorites'),
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
