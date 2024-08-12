@@ -26,7 +26,7 @@
 <!--карточки с товаром-->
 <div class="wr_content">
     <div class="wr_card">
-        {% for bb in bbs %}
+        {% for bb in page_obj %}
             {% url 'detail' rubric_pk=bb.rubric.pk pk=bb.pk as url %}
                 <a class="link_card" href="{{ url }}">
                     <div class="card">
@@ -47,7 +47,54 @@
                     </div>
                 </a>
         {% endfor %}
+
     </div>
 </div>
+
+<div id="bb-container">
+    {% include "main/bb_list_ajax.html" %}
+</div>
+
+
+
+<script>
+        let isLoading = false;
+
+        // Функция для подгрузки новых данных
+        const loadMoreData = () => {
+            const nextPage = document.getElementById('load-more').getAttribute('data-next-page');
+            if (nextPage && !isLoading) {
+                isLoading = true;
+                document.getElementById('loading').style.display = 'block';
+
+                fetch(`?page=${nextPage}`, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.text())
+                .then(data => {
+                    const bbContainer = document.getElementById('bb-container');
+                    bbContainer.innerHTML += data;
+                    const nextPageNumber = parseInt(nextPage) + 1;
+                    if (nextPageNumber > {{ page_obj.paginator.num_pages }}) {
+                        document.getElementById('load-more').remove();
+                    } else {
+                        document.getElementById('load-more').setAttribute('data-next-page', nextPageNumber);
+                    }
+                    isLoading = false;
+                    document.getElementById('loading').style.display = 'none';
+                });
+            }
+        };
+
+        // Обработчик прокрутки
+        window.addEventListener('scroll', () => {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                loadMoreData();
+            }
+        });
+
+</script>
 
 {%  endblock %}

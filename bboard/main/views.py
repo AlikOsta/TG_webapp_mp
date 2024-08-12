@@ -1,21 +1,33 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
+from django.core.paginator import Paginator
 
 from .models import Bb, Rubric
 from .forms import BbForm
 
 
-def index(request):
+def index(request) :
     bbs = Bb.objects.all()
-    for bb in bbs:
+
+    for bb in bbs :
         bb.check_expiration()
     bbs = Bb.objects.filter(is_active=True)
+
+    paginator = Paginator(bbs, 40)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     rubrics = Rubric.objects.all()
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return render(request, 'main/bb_list_ajax.html', {'page_obj' : page_obj})
+
     data = {
+        'page_obj': page_obj,
         'bbs': bbs,
-        'rubrics': rubrics,
+        'rubrics' : rubrics,
     }
+
     return render(request, 'main/index.html', context=data)
 
 
@@ -71,3 +83,5 @@ def create_bb(request):
     else:
         form = BbForm()
     return render(request, 'create.html', {'form': form})
+
+

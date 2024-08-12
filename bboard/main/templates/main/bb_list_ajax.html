@@ -1,0 +1,29 @@
+
+{% load static %}
+
+<div class="wr_content">
+    <div class="wr_card">
+        {% for bb in page_obj %}
+            {% url 'detail' rubric_pk=bb.rubric.pk pk=bb.pk as url %}
+                <a class="link_card" href="{{ url }}">
+                    <div class="card">
+                       {% if bb.additional_images.exists %}
+                            <div class="image-gallery">
+                                <img class="img_card" src="{{ bb.additional_images.first.image.url }}" alt="First additional image">
+                            </div>
+                        {% else %}
+                            <img class="img_card" src="{% static 'main/no_photo_bb.png' %}" alt="Placeholder image">
+                        {% endif %}
+                        
+                        <div>
+                            <p class="title_card">{{ bb.title }}</p>
+                            <p class="content_card">{{ bb.content }}</p>
+                            <p class="pra_card">{{ bb.price }} {{ bb.currency }}</p>
+                            <p class="date_card">{{ bb.city }} {{ bb.published|date:"d.m.Y" }}</p>
+                        </div>
+                    </div>
+                </a>
+        {% endfor %}
+
+    </div>
+</div>
