@@ -32,9 +32,7 @@
                     <div class="card">
                        {% if bb.additional_images.exists %}
                             <div class="image-gallery">
-                                {% for image in bb.additional_images.all %}
-                                    <img class="img_card" src="{{ image.image.url }}" alt="Additional image">
-                                {% endfor %}
+                                <img class="img_card" src="{{ bb.additional_images.first.image.url }}" alt="First additional image">
                             </div>
                         {% else %}
                             <img class="img_card" src="{% static 'main/no_photo_bb.png' %}" alt="Placeholder image">

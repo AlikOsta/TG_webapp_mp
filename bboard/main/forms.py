@@ -11,7 +11,7 @@ class BbForm(forms.ModelForm):
 
     class Meta:
         model = Bb
-        fields = ['rubric', 'title', 'content', 'images', 'price', 'currency', 'country', 'city', ]
+        fields = ['rubric', 'title', 'content', 'images', 'price', 'currency', 'city', ]
 
     def clean_images(self):
         images = self.files.getlist('images')

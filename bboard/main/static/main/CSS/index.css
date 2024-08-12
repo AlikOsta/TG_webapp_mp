@@ -74,6 +74,7 @@
 .img_card {
   width: 30vw;
     max-height: 125px;
+    border-radius: 10px;
 }
 
 /*!* Адаптивные стили *!*/

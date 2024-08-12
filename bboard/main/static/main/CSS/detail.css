@@ -24,3 +24,54 @@ p > span {
   color: #333;
 }
 
+
+/* Стили для слайда */
+.container {
+  font-size: 22px;
+  font-weight: 700;
+  width: 100%;
+  height: 370px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  display: flex;
+  scroll-behavior: smooth;
+  border-radius: 8px;
+  margin: 20px auto;
+  background-color: #ffffff;
+}
+
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.child {
+  scroll-snap-align: start;
+  width: 100%;
+  height: 370px;
+  flex-shrink: 0;
+  display: flex;
+  background-color: #f7f7f7;
+  position: relative;
+  align-items: center;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.img_rub {
+  width: 400px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  object-fit: cover;
+}
+
+.title_rub {
+  width: 150px;
+  margin-left: 20px;
+  font-size: 28px;
+  z-index: 1;
+  color: #333;
+}
+
+
+

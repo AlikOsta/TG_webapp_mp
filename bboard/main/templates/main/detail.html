@@ -3,6 +3,7 @@
 
 {%  block link%}
 <link rel="stylesheet" type="text/css" href="{% static 'main/CSS/detail.css' %}">
+
 {% endblock %}
 
 {% block content %}
@@ -13,9 +14,21 @@
     
     {% if bb.additional_images.exists %}
         <div class="image-gallery">
-            {% for image in bb.additional_images.all %}
-            <img class="img_card" src="{{ image.image.url }}" alt="Additional image">
-            {% endfor %}
+            <div class="wr_container">
+                <div class="container">
+                    {% for image in bb.additional_images.all %}
+                        <section class="child">
+                            <img class="img_card" src="{{ image.image.url }}" alt="Additional image">
+                        </section>
+
+                    {% endfor %}
+                </div>
+            </div>
+            
+            
+<!--            {% for image in bb.additional_images.all %}-->
+<!--            <img class="img_card" src="{{ image.image.url }}" alt="Additional image">-->
+<!--            {% endfor %}-->
         </div>
     {% else %}
         <img class="img_card" src="{% static 'main/no_photo_bb.png' %}" alt="Placeholder image">
