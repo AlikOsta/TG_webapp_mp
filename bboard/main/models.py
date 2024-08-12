@@ -82,7 +82,7 @@ class City(models.Model):
         verbose_name_plural = "Города"
         verbose_name = "Город"
         ordering = ['order']
-        unique_together = ['country', 'name']  # Обеспечивает уникальность города в рамках одной страны
+        unique_together = ['country', 'name']
 
 
 class AdditionalImage(models.Model):
@@ -97,9 +97,3 @@ class AdditionalImage(models.Model):
         verbose_name = "Дополнительное изображение"
 
 
-
-# class AdvUser(AbstractUser):
-#     pass
-#
-#     class Meta(AbstractUser.Meta):
-#         pass

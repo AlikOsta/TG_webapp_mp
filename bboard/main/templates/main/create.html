@@ -1,36 +1,48 @@
 {% extends 'layout/basic.html' %}
 {% load static %}
 
-{%  block link%}
-    <link rel="stylesheet" type="text/css" href="{% static 'main/CSS/create.css' %}">
+{% block link %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/CSS/create.css' %}">
 {% endblock %}
 
 {% block content %}
-    <h1>Добавить объявление</h1>
+<h1>Добавить объявление</h1>
 
-    <form enctype="multipart/form-data" method="post">
-        {% csrf_token %}
-        {% for hidden in form.hidden_fields %}
-            {{ hidden }}
+<form enctype="multipart/form-data" method="post" id="bbForm">
+    {% csrf_token %}
+    {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+
+    {% if form.non_field_errors %}
+    <ul>
+        {% for error in form.non_field_errors %}
+        <li><em>{{ error|escape }}</em></li>
         {% endfor %}
-        {% if form.non_field_errors %}
+    </ul>
+    {% endif %}
+
+    {% for field in form.visible_fields %}
+        {% if field.errors %}
         <ul>
-            {% for error in form.non_field_errors %}
+            {% for error in field.errors %}
             <li><em>{{ error|escape }}</em></li>
             {% endfor %}
         </ul>
         {% endif %}
-        {% for field in form.visible_fields %}
-            {% if field.errors %}
-            <ul>
-                {% for error in field.errors %}
-                <li><em>{{ error|escape }}</em></li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-            <p>{{ field.label_tag }}<br>{{ field }}<br>
-            {{ field.help_text }}</p>
-        {% endfor %}
-        <p><input type="submit" value="Добавить"></p>
-    </form>
+        <p>{{ field.label_tag }}<br>{{ field }}<br>{{ field.help_text }}</p>
+    {% endfor %}
+    
+    <div id="image-fields">
+        <div class="image-upload">
+            <label for="image_1">Дополнительные изображения</label>
+            <input type="file" name="image" id="image_1">
+            <input type="file" name="image" id="image_2">
+        </div>
+    </div>
+    
+    <p><input type="submit" value="Добавить"></p>
+</form>
+
+
 {% endblock %}

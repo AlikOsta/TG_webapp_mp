@@ -4,26 +4,20 @@ from .models import Bb, AdditionalImage
 
 
 class BbForm(forms.ModelForm):
-    images = forms.ImageField(
-        widget=forms.FileInput(attrs={'multiple': False}),
-        required=False
-    )
+    image = forms.ImageField(required=False, label="Изображения")
 
     class Meta:
         model = Bb
-        fields = ['rubric', 'title', 'content', 'images', 'price', 'currency', 'city', ]
-
-    def clean_images(self):
-        images = self.files.getlist('images')
-        if len(images) > 5:
-            raise forms.ValidationError("Нельзя загрузить более 5 изображений.")
-        return images
+        fields = ['rubric', 'title', 'content', 'price', 'currency', 'city']
 
     def save(self, commit=True):
         bb = super().save(commit=False)
         if commit:
             bb.save()
-        images = self.cleaned_data['images']
+        images = self.files.getlist('image')
         for image in images:
-            AdditionalImage.objects.create(bb=bb, image=image)
+            if image:
+                AdditionalImage.objects.create(bb=bb, image=image)
         return bb
+
+
