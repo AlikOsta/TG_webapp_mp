@@ -40,6 +40,8 @@ def by_rubric(request, pk) :
     paginator = Paginator(bbs, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    print(len(page_obj))
+
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest' :
         return render(request, 'main/bb_list_ajax.html', {'page_obj' : page_obj})
@@ -66,7 +68,7 @@ def detail(request, rubric_pk, pk):
     bb = get_object_or_404(Bb, pk=pk)
     bb.check_expiration()
     if not bb.is_active:
-        return render(request, 'main/404.html', status=404)  # Или другой шаблон для неактивных объявлений
+        return render(request, 'main/404.html', status=404)
     context = {'bb': bb}
     return render(request, 'main/detail.html', context)
 

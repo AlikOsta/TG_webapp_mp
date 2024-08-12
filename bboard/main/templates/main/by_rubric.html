@@ -15,45 +15,60 @@
     </div>
 </div>
 
-<div id="load-more" data-next-page="{{ page_obj.next_page_number }}">
-    <div id="loading" style="display: none;">Загрузка...</div>
-</div>
+{% if page_obj.has_next %}
+    <div id="load-more" data-next-page="{{ page_obj.next_page_number }}">
+        <div id="loading" style="display: none;">Загрузка...</div>
+    </div>
+{% endif %}
 
 <script>
     let isLoading = false;
 
-    const loadMoreData = () => {
-        const nextPage = document.getElementById('load-more').getAttribute('data-next-page');
-        if (nextPage && !isLoading) {
-            isLoading = true;
-            document.getElementById('loading').style.display = 'block';
+const loadMoreData = () => {
+    const loadMoreElement = document.getElementById('load-more');
+    if (!loadMoreElement) return;  // Прекращаем выполнение, если элемента нет
 
-            fetch(`?page=${nextPage}`, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => response.text())
-            .then(data => {
-                const bbContainer = document.getElementById('bb-container');
-                bbContainer.innerHTML += data;
-                const nextPageNumber = parseInt(nextPage) + 1;
-                if (nextPageNumber > {{ page_obj.paginator.num_pages }}) {
-                    document.getElementById('load-more').remove();
-                } else {
-                    document.getElementById('load-more').setAttribute('data-next-page', nextPageNumber);
-                }
-                isLoading = false;
-                document.getElementById('loading').style.display = 'none';
-            });
-        }
-    };
+    const nextPage = loadMoreElement.getAttribute('data-next-page');
+    if (nextPage && !isLoading) {
+        isLoading = true;
 
-    window.addEventListener('scroll', () => {
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-            loadMoreData();
+        const loadingElement = document.getElementById('loading');
+        if (loadingElement) {
+            loadingElement.style.display = 'block';
         }
-    });
+
+        fetch(`?page=${nextPage}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.text())
+        .then(data => {
+            const bbContainer = document.getElementById('bb-container');
+            bbContainer.innerHTML += data;
+            const nextPageNumber = parseInt(nextPage) + 1;
+
+            if (nextPageNumber > {{ page_obj.paginator.num_pages }}) {
+                loadMoreElement.remove();
+            } else {
+                loadMoreElement.setAttribute('data-next-page', nextPageNumber);
+            }
+
+            isLoading = false;
+
+            if (loadingElement) {
+                loadingElement.style.display = 'none';
+            }
+        });
+    }
+};
+
+window.addEventListener('scroll', () => {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        loadMoreData();
+    }
+});
+
 </script>
 
 {% endblock %}
