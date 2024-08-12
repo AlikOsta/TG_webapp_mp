@@ -26,7 +26,7 @@
         const nextPage = document.getElementById('load-more').getAttribute('data-next-page');
         if (nextPage && !isLoading) {
             isLoading = true;
-            document.getElementById('loading').style.display = 'block';
+            // document.getElementById('loading').style.display = 'block';
 
             fetch(`?page=${nextPage}`, {
                 headers: {
@@ -44,7 +44,7 @@
                     document.getElementById('load-more').setAttribute('data-next-page', nextPageNumber);
                 }
                 isLoading = false;
-                document.getElementById('loading').style.display = 'none';
+                // document.getElementById('loading').style.display = 'none';
             });
         }
     };
