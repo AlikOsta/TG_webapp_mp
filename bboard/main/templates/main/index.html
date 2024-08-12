@@ -1,19 +1,16 @@
 {% extends 'layout/basic.html' %}
 {% load static %}
 
-
-<!--подключаем дополнительные стили-->
-{%  block link%}
+{% block link %}
     <link rel="stylesheet" type="text/css" href="{% static 'main/CSS/index.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'main/CSS/slide_rubric.css' %}">
 {% endblock %}
 
-{%  block content%}
-<!--шапка с рубриками-->
+{% block content %}
 <div class="wr_container">
     <div class="container">
         {% for rubric in rubrics %}
-           <a href="{% url 'by_rubric' rubric.id %}">
+            <a href="{% url 'by_rubric' rubric.id %}">
                 <section class="child">
                     <div class="title_rub">{{ rubric.name }}</div>
                     <img class="img_rub" src="{% static 'main/img_cat/cat_' %}{{ rubric.order }}.png">
@@ -23,78 +20,54 @@
     </div>
 </div>
 
-<!--карточки с товаром-->
+<!--Карточки с товаром-->
 <div class="wr_content">
-    <div class="wr_card">
-        {% for bb in page_obj %}
-            {% url 'detail' rubric_pk=bb.rubric.pk pk=bb.pk as url %}
-                <a class="link_card" href="{{ url }}">
-                    <div class="card">
-                       {% if bb.additional_images.exists %}
-                            <div class="image-gallery">
-                                <img class="img_card" src="{{ bb.additional_images.first.image.url }}" alt="First additional image">
-                            </div>
-                        {% else %}
-                            <img class="img_card" src="{% static 'main/no_photo_bb.png' %}" alt="Placeholder image">
-                        {% endif %}
-                        
-                        <div>
-                            <p class="title_card">{{ bb.title }}</p>
-                            <p class="content_card">{{ bb.content }}</p>
-                            <p class="pra_card">{{ bb.price }} {{ bb.currency }}</p>
-                            <p class="date_card">{{ bb.city }} {{ bb.published|date:"d.m.Y" }}</p>
-                        </div>
-                    </div>
-                </a>
-        {% endfor %}
-
+    <div id="bb-container" class="wr_card">
+        {% include "main/bb_list_ajax.html" with page_obj=page_obj %}
     </div>
 </div>
 
-<div id="bb-container">
-    {% include "main/bb_list_ajax.html" %}
+<!--Секция для индикатора загрузки-->
+<div id="load-more" data-next-page="{{ page_obj.next_page_number }}">
+<!--    <div id="loading" style="display: none;">Загрузка...</div>-->
 </div>
 
-
-
 <script>
-        let isLoading = false;
+    let isLoading = false;
 
-        // Функция для подгрузки новых данных
-        const loadMoreData = () => {
-            const nextPage = document.getElementById('load-more').getAttribute('data-next-page');
-            if (nextPage && !isLoading) {
-                isLoading = true;
-                document.getElementById('loading').style.display = 'block';
+    const loadMoreData = () => {
+        const nextPage = document.getElementById('load-more').getAttribute('data-next-page');
+        if (nextPage && !isLoading) {
+            isLoading = true;
+            // document.getElementById('loading').style.display = 'block';
 
-                fetch(`?page=${nextPage}`, {
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                })
-                .then(response => response.text())
-                .then(data => {
-                    const bbContainer = document.getElementById('bb-container');
-                    bbContainer.innerHTML += data;
-                    const nextPageNumber = parseInt(nextPage) + 1;
-                    if (nextPageNumber > {{ page_obj.paginator.num_pages }}) {
-                        document.getElementById('load-more').remove();
-                    } else {
-                        document.getElementById('load-more').setAttribute('data-next-page', nextPageNumber);
-                    }
-                    isLoading = false;
-                    document.getElementById('loading').style.display = 'none';
-                });
-            }
-        };
+            fetch(`?page=${nextPage}`, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.text())
+            .then(data => {
+                const bbContainer = document.getElementById('bb-container');
+                bbContainer.innerHTML += data;
+                const nextPageNumber = parseInt(nextPage) + 1;
+                if (nextPageNumber > {{ page_obj.paginator.num_pages }}) {
+                    document.getElementById('load-more').remove();
+                } else {
+                    document.getElementById('load-more').setAttribute('data-next-page', nextPageNumber);
+                }
+                isLoading = false;
+                // document.getElementById('loading').style.display = 'none';
+            });
+        }
+    };
 
-        // Обработчик прокрутки
-        window.addEventListener('scroll', () => {
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-                loadMoreData();
-            }
-        });
-
+    window.addEventListener('scroll', () => {
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+            loadMoreData();
+        }
+    });
+    
 </script>
 
-{%  endblock %}
+{% endblock %}
