@@ -57,21 +57,6 @@ p > span {
   overflow: hidden;
 }
 
-.img_rub {
-  width: 400px;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  object-fit: cover;
-}
-
-.title_rub {
-  width: 150px;
-  margin-left: 20px;
-  font-size: 28px;
-  z-index: 1;
-  color: #333;
-}
 
 
 
