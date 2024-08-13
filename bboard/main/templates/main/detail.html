@@ -1,9 +1,9 @@
 {% extends "layout/basic.html" %}
 {% load static %}
 
-{%  block link%}
+{% block link %}
 <link rel="stylesheet" type="text/css" href="{% static 'main/CSS/detail.css' %}">
-
+<link href="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/css/lightbox.min.css" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -18,28 +18,25 @@
                 <div class="container">
                     {% for image in bb.additional_images.all %}
                         <section class="child">
-                            <img class="img_card" src="{{ image.image.url }}" alt="Additional image">
+                            <a href="{{ image.image.url }}" data-lightbox="image-gallery" data-title="Additional image">
+                                <img class="img_card" src="{{ image.image.url }}" alt="Additional image">
+                            </a>
                         </section>
-
                     {% endfor %}
                 </div>
             </div>
-            
-            
-<!--            {% for image in bb.additional_images.all %}-->
-<!--            <img class="img_card" src="{{ image.image.url }}" alt="Additional image">-->
-<!--            {% endfor %}-->
         </div>
     {% else %}
         <img class="img_card" src="{% static 'main/no_photo_bb.png' %}" alt="Placeholder image">
     {% endif %}
     
     <p>Описание: {{ bb.content }}</p>
-    <p >Цена: {{ bb.price }} {{ bb.currency }}</p>
-    <p >Категория: {{ bb.rubric }}</p>
+    <p>Цена: {{ bb.price }} {{ bb.currency }}</p>
+    <p>Категория: {{ bb.rubric }}</p>
     <p>Продавец: {{ bb.contacts }}</p>
     <p>В продаже: {{ bb.is_active }}</p>
-    <p>Добавлено {{  bb.published|date:"d.m.Y" }}</p>
+    <p>Добавлено {{ bb.published|date:"d.m.Y" }}</p>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/js/lightbox-plus-jquery.min.js"></script>
 {% endblock %}
