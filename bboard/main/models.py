@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from datetime import timedelta
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 
 
 class Bb(models.Model):
@@ -97,3 +97,10 @@ class AdditionalImage(models.Model):
         verbose_name = "Дополнительное изображение"
 
 
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    telegram_id = models.CharField(max_length=255, unique=True)
+    profile_photo_url = models.URLField(blank=True, null=True)
+
+    def __str__(self):
+        return self.user.username

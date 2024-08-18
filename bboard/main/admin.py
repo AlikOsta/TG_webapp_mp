@@ -1,11 +1,10 @@
 from django.contrib import admin
-
 from .models import Bb, Rubric, Currency, Country, City, AdditionalImage
 
 
 class AdditionalImageInline(admin.TabularInline):
     model = AdditionalImage
-    extra = 1  # Количество пустых форм для загрузки изображений
+    extra = 1
 
 
 class BbAdmin(admin.ModelAdmin):
