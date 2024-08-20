@@ -15,6 +15,7 @@ class Bb(models.Model):
     is_active = models.BooleanField(default=True, verbose_name='Активно')
     country = models.ForeignKey('Country', null=True, on_delete=models.PROTECT, verbose_name='Страна')
     city = models.ForeignKey('City', null=True, on_delete=models.PROTECT, verbose_name='Город')
+    # author = models.ForeignKey(CustomUser, on_delete=models.CASCADE,  verbose_name='Автор')
 
     def check_expiration(self):
         if self.published < timezone.now() - timedelta(days=28):
@@ -100,8 +101,13 @@ class AdditionalImage(models.Model):
 
 class CustomUser(AbstractUser):
     telegram_id = models.CharField(max_length=12, unique=True, verbose_name='telegram id')
-    user_name = models.CharField(max_length=30, unique=True, verbose_name='имя пользователя')
-    tg_name = models.CharField(max_length=30, unique=True, verbose_name='telegram имя')
+    username = models.CharField(max_length=30, verbose_name='имя пользователя')
+    tg_name = models.CharField(max_length=30, verbose_name='telegram имя')
+
+    USERNAME_FIELD = 'telegram_id'
 
     def __str__(self):
-        return self.user_name
+        return self.username
+
+    class Meta(AbstractUser.Meta):
+        pass

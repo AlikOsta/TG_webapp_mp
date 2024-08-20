@@ -2,7 +2,7 @@ from bboard import settings
 from django.urls import path
 from django.conf.urls.static import static
 
-from .views import index, by_rubric, BbCreateView, detail, favorites,  user
+from .views import index, by_rubric, BbCreateView, detail, favorites, user
 from .utils import user_view
 
 
@@ -14,7 +14,6 @@ urlpatterns = [
     path('favorites/', favorites, name='favorites'), # избранное для пользователя
     path('web-app/', user_view, name='web-app'), # для получения данных от тг
     path('user/', user, name='user') # пользователь
-
 ]
 
 if settings.DEBUG:

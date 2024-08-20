@@ -13,12 +13,15 @@ from .forms import BbForm
 from .utils import user_view
 
 
-@cache_page(60 * 60)
-def user(request):
-    return render(request, 'main/user.html', {'user': request.user})
+def user(request) :
+    current_user = request.user
+
+    all_users = CustomUser.objects.all()
+
+    return render(request, 'main/user.html', {'user' : current_user, 'all_users' : all_users})
 
 
-@cache_page(60 * 1)
+
 def index(request):
     bbs = Bb.objects.all()
     for bb in bbs:
@@ -39,7 +42,7 @@ def index(request):
     return render(request, 'main/index.html', context=data)
 
 
-@cache_page(60 * 1)
+
 def by_rubric(request, pk):
     rubric = get_object_or_404(Rubric, pk=pk)
     bbs = Bb.objects.filter(rubric=pk)
@@ -63,13 +66,13 @@ def by_rubric(request, pk):
     return render(request, 'main/by_rubric.html', context=data)
 
 
-@cache_page(60 * 60)
+
 def favorites(request):
     data = {'title': 'favorites'}
     return render(request, 'main/favorites.html', context=data)
 
 
-@cache_page(60 * 60)
+
 def detail(request, rubric_pk, pk):
     bb = get_object_or_404(Bb, pk=pk)
     bb.check_expiration()

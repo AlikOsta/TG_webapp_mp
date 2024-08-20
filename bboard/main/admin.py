@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Bb, Rubric, Currency, Country, City, AdditionalImage
+from .models import Bb, Rubric, Currency, Country, City, AdditionalImage, CustomUser
 
 
 class AdditionalImageInline(admin.TabularInline):
@@ -19,3 +19,4 @@ admin.site.register(Rubric)
 admin.site.register(Currency)
 admin.site.register(Country)
 admin.site.register(City)
+admin.site.register(CustomUser)
