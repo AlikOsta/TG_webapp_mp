@@ -9,7 +9,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-y*emuw0-7l2z-g@1bz0!y0h(k-24vk6(cdb8*ij@z0j$p_#j6p'
+SECRET_KEY = 'django-insecure-y*emuw0-7l2z-g@1bz0!y0h(k-24vk6(cdb8*ij@z0j$p_j6p'
+# JWT_SECRET = '6462154639:AAGTiKGwQ2V5zYXgess0ULsaoqBMCk3F_f8'
+# TELEGRAM_BOT_TOKEN = '6462154639:AAGTiKGwQ2V5zYXgess0ULsaoqBMCk3F_f8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -113,15 +115,11 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
-
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-
-TELEGRAM_BOT_TOKEN = '6462154639:AAGTiKGwQ2V5zYXgess0ULsaoqBMCk3F_f8'
-
+AUTH_USER_MODEL = 'main.CustomUser'
 LOGIN_REDIRECT_URL = 'index'
-
 LOGOUT_REDIRECT_URL = 'index'
 
-JWT_SECRET = '6462154639:AAGTiKGwQ2V5zYXgess0ULsaoqBMCk3F_f8'
+

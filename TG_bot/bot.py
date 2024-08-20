@@ -11,19 +11,22 @@ load_dotenv(find_dotenv())
 
 API_TOKEN = os.getenv("API_TOKEN")
 KEYS_WEB_APP_URL = os.getenv("KEYS_WEB_APP_URL")
-JWT_SECRET = os.getenv("JWT_SECRET")
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 
 @dp.message(CommandStart())
 async def start_cmd(message: types.Message):
-    user_id = message.from_user.id
-    username = message.from_user.username
+    print(message)
+    telegram_id = message.from_user.id
+    user_name = message.from_user.first_name
+    tg_name = message.from_user.username
+    # user_photo = message.from_user.profile_photo
 
     # Генерируем JWT токен
-    payload = {"user_id": user_id, "username": username}
-    token = jwt.encode(payload, JWT_SECRET, algorithm="HS256")
+    payload = {"telegram_id": telegram_id, "user_name": user_name, "tg_name": tg_name}
+    token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
     print(token)
     web_app_url = f"{KEYS_WEB_APP_URL}?token={token}"
     print(web_app_url)

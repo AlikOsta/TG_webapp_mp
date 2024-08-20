@@ -2,37 +2,23 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy, reverse
 from django.core.paginator import Paginator
-from django.contrib.auth import login
-from django.contrib.auth.models import User
-from django.http import JsonResponse, HttpResponseRedirect
+
+from django.http import HttpResponseRedirect
 from django.views.decorators.cache import cache_page
-import jwt
+
 from django.conf import settings
-from .models import Profile, Bb, Rubric
+
+from .models import Bb, Rubric, CustomUser
 from .forms import BbForm
-
-
-def user_view(request):
-
-    token = request.GET.get("token")
-
-    try:
-        # Декодируем токен
-        payload = jwt.decode(token, settings.JWT_SECRET, algorithms=["HS256"])
-
-        username = payload.get('username')
-        user_id = payload.get('user_id')
-
-        return render(request, 'main/user.html', {"user_id": user_id, "username": username})
-
-    except jwt.ExpiredSignatureError:
-        return render(request, 'main/invalid_signature.html')
-
-    except jwt.InvalidTokenError:
-        return render(request, 'main/invalid_signature.html')
+from .utils import user_view
 
 
 @cache_page(60 * 60)
+def user(request):
+    return render(request, 'main/user.html', {'user': request.user})
+
+
+@cache_page(60 * 1)
 def index(request):
     bbs = Bb.objects.all()
     for bb in bbs:
@@ -53,7 +39,7 @@ def index(request):
     return render(request, 'main/index.html', context=data)
 
 
-@cache_page(60 * 60)
+@cache_page(60 * 1)
 def by_rubric(request, pk):
     rubric = get_object_or_404(Rubric, pk=pk)
     bbs = Bb.objects.filter(rubric=pk)
@@ -77,11 +63,13 @@ def by_rubric(request, pk):
     return render(request, 'main/by_rubric.html', context=data)
 
 
+@cache_page(60 * 60)
 def favorites(request):
     data = {'title': 'favorites'}
     return render(request, 'main/favorites.html', context=data)
 
 
+@cache_page(60 * 60)
 def detail(request, rubric_pk, pk):
     bb = get_object_or_404(Bb, pk=pk)
     bb.check_expiration()

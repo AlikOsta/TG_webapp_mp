@@ -6,8 +6,9 @@
 
 
 <div>
-    <h1>Добро пожаловать, {{ user.username }}!</h1>
-    <p>Ваш профиль Telegram успешно интегрирован.</p>
+    <h1>Привет, {{ user.username }}!</h1>
+    <p>Имя в Telegram: {{ user.tg_name }}</p>
+    <p>Telegram ID: {{ user.telegram_id }}</p>
 </div>
 
 {% endblock %}
