@@ -98,8 +98,8 @@ LOGOUT_REDIRECT_URL = 'index'
 # Сессии и куки
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_NAME = 'sessionid'
-SESSION_COOKIE_AGE = 1209600  # 2 недели
-SESSION_COOKIE_SECURE = True  # Только для HTTPS
+SESSION_COOKIE_AGE = 1209600
+SESSION_COOKIE_SECURE = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 # Безопасность

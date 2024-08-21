@@ -13,13 +13,13 @@ from .forms import BbForm
 from .utils import user_view
 
 
+
 def user(request) :
     current_user = request.user
 
     all_users = CustomUser.objects.all()
 
     return render(request, 'main/user.html', {'user' : current_user, 'all_users' : all_users})
-
 
 
 def index(request):
@@ -40,7 +40,6 @@ def index(request):
         'rubrics': rubrics,
     }
     return render(request, 'main/index.html', context=data)
-
 
 
 def by_rubric(request, pk):
@@ -64,7 +63,6 @@ def by_rubric(request, pk):
         'rubric': rubric,
     }
     return render(request, 'main/by_rubric.html', context=data)
-
 
 
 def favorites(request):
