@@ -2,8 +2,43 @@ from django.db import models
 from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import BaseUserManager
 
 
+class CustomUserManager(BaseUserManager):
+    def create_superuser(self, telegram_id, username, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
+        return self.create_user(telegram_id, username, password, **extra_fields)
+
+    def create_user(self, telegram_id, username, password=None, **extra_fields):
+        if not telegram_id:
+            raise ValueError('The Telegram ID must be set')
+        user = self.model(telegram_id=telegram_id, username=username, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+
+class CustomUser(AbstractUser):
+    telegram_id = models.CharField(max_length=12, unique=True, verbose_name='telegram id')
+    username = models.CharField(default="Пользователь", max_length=30, verbose_name='имя пользователя')
+    tg_name = models.CharField(default="@telegram", max_length=30, verbose_name='telegram имя')
+    image = models.ImageField(upload_to='images/user', default='static/main/no_photo_user.png',  verbose_name='Фото профиля')
+
+    USERNAME_FIELD = 'telegram_id'
+    REQUIRED_FIELDS = ['username']
+
+    objects = CustomUserManager()
+
+    def __str__(self):
+        return self.username
 
 class Bb(models.Model):
     rubric = models.ForeignKey('Rubric', null=True, on_delete=models.PROTECT, verbose_name='Рубрика')
@@ -15,7 +50,7 @@ class Bb(models.Model):
     is_active = models.BooleanField(default=True, verbose_name='Активно')
     country = models.ForeignKey('Country', null=True, on_delete=models.PROTECT, verbose_name='Страна')
     city = models.ForeignKey('City', null=True, on_delete=models.PROTECT, verbose_name='Город')
-    # author = models.ForeignKey(CustomUser, on_delete=models.CASCADE,  verbose_name='Автор')
+    author = models.ForeignKey(CustomUser, default=1, on_delete=models.CASCADE,  verbose_name='Автор')
 
     def check_expiration(self):
         if self.published < timezone.now() - timedelta(days=28):
@@ -98,14 +133,4 @@ class AdditionalImage(models.Model):
         verbose_name_plural = "Дополнительные изображения"
         verbose_name = "Дополнительное изображение"
 
-
-class CustomUser(AbstractUser):
-    telegram_id = models.CharField(max_length=12, unique=True, verbose_name='telegram id')
-    username = models.CharField(max_length=30, verbose_name='имя пользователя')
-    tg_name = models.CharField(max_length=30, verbose_name='telegram имя')
-
-    USERNAME_FIELD = 'telegram_id'
-
-    def __str__(self):
-        return self.username
 
