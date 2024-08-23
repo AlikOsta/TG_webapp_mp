@@ -11,7 +11,7 @@
 <div class="wr_detail">
 
     <h1>{{ bb.title }}</h1>
-    
+
     {% if bb.additional_images.exists %}
         <div class="image-gallery">
             <div class="wr_container">
@@ -29,11 +29,11 @@
     {% else %}
         <img class="img_card" src="{% static 'main/no_photo_bb.png' %}" alt="Placeholder image">
     {% endif %}
-    
+
     <p>Описание: {{ bb.content }}</p>
     <p>Цена: {{ bb.price }} {{ bb.currency }}</p>
     <p>Категория: {{ bb.rubric }}</p>
-    <p>Продавец: {{ bb.author }}</p>
+    <p>Продавец: {{ bb.author.username }}</p>
     <p>Контакты продавца: @{{ bb.author.telegram_id }}</p>
     <p>В продаже: {{ bb.is_active }}</p>
     <p>Добавлено {{ bb.published|date:"d.m.Y" }}</p>

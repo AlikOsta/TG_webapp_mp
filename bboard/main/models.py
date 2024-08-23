@@ -4,7 +4,20 @@ from datetime import timedelta
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import BaseUserManager
 from django.conf import settings
+from django.db.models import Avg
 
+
+class Rating(models.Model):
+    seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='ratings_received', verbose_name='Продавец')
+    rater = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='ratings_given', verbose_name='Оценивающий')
+    score = models.IntegerField(default=1)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('seller', 'rater') # проверяем что бы только 1 раз можно было оценить
+
+    def __str__(self):
+        return f"Рейтинг {self.score} для {self.seller.username} от {self.rater.username}"
 
 class CustomUserManager(BaseUserManager):
     def create_superuser(self, telegram_id, username, password=None, **extra_fields):
@@ -37,6 +50,11 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = ['username']
 
     objects = CustomUserManager()
+
+    def get_average_rating(self):
+        ratings = self.ratings_received.all()
+        avg_rating = ratings.aggregate(Avg('score'))['score__avg']
+        return avg_rating if avg_rating else 0
 
     def __str__(self):
         return self.username
