@@ -33,9 +33,12 @@ class AdditionalImageInline(admin.TabularInline):
 
 class BbAdmin(admin.ModelAdmin):
     inlines = [AdditionalImageInline]
-    list_display = ('title', 'content', 'price', 'published', 'rubric', "is_active")
+    list_display = ('title', 'content', 'price', 'published', 'rubric', "is_active", 'author')
     list_display_links = ('title', 'content', )
     search_fields = ('title', 'content', )
+
+    list_filter = ('author', 'rubric', 'city')
+
 
 admin.site.register(Bb, BbAdmin)
 admin.site.register(Rubric)

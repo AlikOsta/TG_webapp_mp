@@ -3,6 +3,7 @@ from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import BaseUserManager
+from django.conf import settings
 
 
 class CustomUserManager(BaseUserManager):
@@ -50,7 +51,7 @@ class Bb(models.Model):
     is_active = models.BooleanField(default=True, verbose_name='Активно')
     country = models.ForeignKey('Country', null=True, on_delete=models.PROTECT, verbose_name='Страна')
     city = models.ForeignKey('City', null=True, on_delete=models.PROTECT, verbose_name='Город')
-    author = models.ForeignKey(CustomUser, default=1, on_delete=models.CASCADE,  verbose_name='Автор')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,  verbose_name='Автор')
 
     def check_expiration(self):
         if self.published < timezone.now() - timedelta(days=28):

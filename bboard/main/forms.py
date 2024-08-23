@@ -12,6 +12,7 @@ class BbForm(forms.ModelForm):
         model = Bb
         fields = ['rubric', 'title', 'content', 'price', 'currency', 'city']
 
+
     def save(self, commit=True):
         bb = super().save(commit=False)
         if commit:

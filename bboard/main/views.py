@@ -90,6 +90,10 @@ class BbCreateView(CreateView):
         context['rubrics'] = Rubric.objects.all()
         return context
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
 
 def create_bb(request):
     if request.method == 'POST':
@@ -100,3 +104,8 @@ def create_bb(request):
     else:
         form = BbForm()
     return render(request, 'create.html', {'form': form})
+
+
+def user_bbs(request):
+    bbs = Bb.objects.filter(author=request.user)
+    return render(request, 'main/user_bbs.html', {'bbs': bbs})
