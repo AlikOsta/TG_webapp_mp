@@ -19,6 +19,7 @@ class Rating(models.Model):
     def __str__(self):
         return f"Рейтинг {self.score} для {self.seller.username} от {self.rater.username}"
 
+
 class CustomUserManager(BaseUserManager):
     def create_superuser(self, telegram_id, username, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)

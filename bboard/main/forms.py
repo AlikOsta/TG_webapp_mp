@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import CustomUser
 
 
+
 class BbForm(forms.ModelForm):
     image = forms.ImageField(required=False, label="Изображения")
 
@@ -33,3 +34,10 @@ class CustomUserCreationForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         self.fields['telegram_id'].label = "Telegram ID"
         self.fields['username'].label = "Имя пользователя"
+
+
+class ChaserUserInfoForm(forms.ModelForm):
+    # username = forms.CharField(required=True, label='Имя')
+    class Meta:
+        model = CustomUser
+        fields = [ 'username', 'image' ]

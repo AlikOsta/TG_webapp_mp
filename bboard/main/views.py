@@ -2,6 +2,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy, reverse
 from django.core.paginator import Paginator
+from django.views.generic.edit import UpdateView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import ChaserUserInfoForm
 
 from django.http import HttpResponseRedirect
 from django.views.decorators.cache import cache_page
@@ -109,3 +113,20 @@ def create_bb(request):
 def user_bbs(request):
     bbs = Bb.objects.filter(author=request.user)
     return render(request, 'main/user_bbs.html', {'bbs': bbs})
+
+
+class ChangeUserInfoView(SuccessMessageMixin, UpdateView):
+    model = CustomUser
+    template_name = 'main/change_user_info.html'
+    form_class = ChaserUserInfoForm
+    success_url = reverse_lazy('user')
+    success_message = 'Данные изменены'
+
+    def setup(self, request, *args, **kwargs):
+        self.user_id = request.user.pk
+        return super().setup(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
+        if not queryset:
+            queryset = self.get_queryset()
+        return get_object_or_404(queryset, pk=self.user_id)

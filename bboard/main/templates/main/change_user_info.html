@@ -1,0 +1,44 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+
+{% block link %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/CSS/create.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<h1>Правка личных данных пользователя {{ user.username }}</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <!-- Вывод полей формы -->
+    <div>
+        {{ form.non_field_errors }}
+    </div>
+
+    <div>
+        <label for="{{ form.username.id_for_label }}">Имя пользователя:</label>
+        {{ form.username }}
+        {{ form.username.errors }}
+    </div>
+
+    <div>
+        <label for="{{ form.image.id_for_label }}">Изображение:</label>
+        {% if user.image %}
+            <div>
+                <p>На данный момент:</p>
+                <img src="{{ user.image }}" alt="Текущее изображение" style="max-width: 200px; max-height: 200px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+        {% endif %}
+        {{ form.image }}
+        {{ form.image.errors }}
+    </div>
+
+
+    <div>
+        <p><input type="submit" value="Изменить"></p>
+    </div>
+</form>
+
+{% endblock %}

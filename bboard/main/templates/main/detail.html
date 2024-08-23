@@ -35,6 +35,11 @@
     <p>Категория: {{ bb.rubric }}</p>
     <p>Продавец: {{ bb.author.username }}</p>
     <p>Контакты продавца: @{{ bb.author.telegram_id }}</p>
+    {% if bb.author.image %}
+        <img src="{{ bb.author.image.url }}" style="max-width: 200px; max-height: 200px; border: 1px solid #ddd; border-radius: 5px;">
+    {% else %}
+        <img src="{% static 'main/no_photo_user.png' %}" alt="Нет изображения" style="max-width: 200px; max-height: 200px; border: 1px solid #ddd; border-radius: 5px;">
+    {% endif %}
     <p>В продаже: {{ bb.is_active }}</p>
     <p>Добавлено {{ bb.published|date:"d.m.Y" }}</p>
 </div>

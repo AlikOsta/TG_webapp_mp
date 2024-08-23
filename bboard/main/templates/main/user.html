@@ -6,8 +6,15 @@
 
 <div>
     <h1>Привет, {{ user.username }}!</h1>
+    <p>Фото
+     <img src="{{ user.image.url }}" style="max-width: 200px; max-height: 200px; border: 1px solid #ddd; border-radius: 5px;">
+    </p>
     <p>Имя в Telegram: {{ user.tg_name }}</p>
     <p>Telegram ID: {{ user.telegram_id }}</p>
 </div>
 
+
+    <a href="{% url 'user_change' %}">
+    <p><input type="submit" value="Изменить данные"></p>
+    </a>
 {% endblock %}
