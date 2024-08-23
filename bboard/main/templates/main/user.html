@@ -14,7 +14,24 @@
 </div>
 
 
-    <a href="{% url 'user_change' %}">
-    <p><input type="submit" value="Изменить данные"></p>
+<a href="{% url 'user_change' %}">
+<p><input type="submit" value="Изменить данные"></p>
+</a>
+
+    <hr>
+
+{% if page_obj %}
+    <h1>Мои объявления ({{ len_bb }})</h1>
+    <div class="wr_content">
+        <div id="bb-container" class="wr_card">
+            {% include "main/bb_list_ajax.html" with page_obj=page_obj %}
+        </div>
+    </div>
+{% else %}
+    <h1>У вас еще нет объявлений</h1>
+    <a href="{% url 'add' %}">
+    <p><input type="submit" value="Разместить объявления"></p>
     </a>
+{%  endif %}
+
 {% endblock %}

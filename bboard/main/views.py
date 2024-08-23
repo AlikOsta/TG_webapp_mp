@@ -20,10 +20,28 @@ from .utils import user_view
 
 def user(request) :
     current_user = request.user
+    # all_users = CustomUser.objects.all()
 
-    all_users = CustomUser.objects.all()
+    bbs = Bb.objects.filter(author=request.user)
+    paginator = Paginator(bbs, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    rubrics = Rubric.objects.all()
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return render(request, 'main/bb_list_ajax.html', {'page_obj': page_obj})
 
-    return render(request, 'main/user.html', {'user' : current_user, 'all_users' : all_users})
+    len_bb = len(bbs)
+
+    print(len_bb)
+
+    context={
+        'user' : current_user,
+        'page_obj': page_obj,
+        'rubrics': rubrics,
+        'len_bb': len_bb,
+    }
+
+    return render(request, 'main/user.html', context)
 
 
 def index(request):
@@ -39,11 +57,12 @@ def index(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         return render(request, 'main/bb_list_ajax.html', {'page_obj': page_obj})
 
-    data = {
+    context = {
         'page_obj': page_obj,
         'rubrics': rubrics,
+
     }
-    return render(request, 'main/index.html', context=data)
+    return render(request, 'main/index.html', context)
 
 
 def by_rubric(request, pk):
@@ -110,9 +129,7 @@ def create_bb(request):
     return render(request, 'create.html', {'form': form})
 
 
-def user_bbs(request):
-    bbs = Bb.objects.filter(author=request.user)
-    return render(request, 'main/user_bbs.html', {'bbs': bbs})
+
 
 
 class ChangeUserInfoView(SuccessMessageMixin, UpdateView):
