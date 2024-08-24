@@ -19,7 +19,9 @@ class BbForm(forms.ModelForm):
     class Meta:
         model = Bb
         fields = ['rubric', 'title', 'content', 'price', 'currency', 'city']
-        widgets = {'author': forms.HiddenInput}
+        widgets = {
+            'author': forms.HiddenInput,
+        }
 
     def save(self, commit=True):
         bb = super().save(commit=False)

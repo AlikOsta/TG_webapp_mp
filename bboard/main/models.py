@@ -45,7 +45,8 @@ class CustomUser(AbstractUser):
     telegram_id = models.CharField(max_length=12, unique=True, verbose_name='telegram id')
     username = models.CharField(default="Пользователь", max_length=30, verbose_name='имя пользователя')
     tg_name = models.CharField(default="@telegram", max_length=30, verbose_name='telegram имя')
-    image = models.ImageField(upload_to='images/user', default='static/main/no_photo_user.png',  verbose_name='Фото профиля')
+    # image = models.ImageField(upload_to='images/user', verbose_name='Фото профиля')
+    image = models.ImageField(upload_to='images/user', default='static/main/no_photo_user.png',  verbose_name='Фото профиля') #криво отображается фото по умолчанию
 
     USERNAME_FIELD = 'telegram_id'
     REQUIRED_FIELDS = ['username']

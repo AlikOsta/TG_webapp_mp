@@ -11,11 +11,10 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    {{ formset.management_form }}
     {% for form in formset %}
         {{ form.as_p }}
     {% endfor %}
-    <button type="submit">Сохранить изменения</button>
+    <button type="submit">Сохранить</button>
 </form>
 
 <a href="{% url 'user' %}">Отменить</a>

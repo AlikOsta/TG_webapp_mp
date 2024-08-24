@@ -6,6 +6,7 @@ from django.views.generic.edit import UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import ChaserUserInfoForm
+from django.contrib import messages
 
 from django.http import HttpResponseRedirect
 from django.views.decorators.cache import cache_page
@@ -151,7 +152,7 @@ def profile_bb_delete(request, pk):
     if request.method == 'POST':
         bb.delete()
         return redirect('user')
-    return render(request, 'main/confirm_delete.html', {'bb': bb})
+    return render(request, {'bb': bb})
 
 
 def profile_bb_change(request, pk) :
@@ -161,14 +162,18 @@ def profile_bb_change(request, pk) :
         form = BbForm(request.POST, request.FILES, instance=bb)
         formset = AiFormSet(request.POST, request.FILES, instance=bb)
 
-        if form.is_valid() and formset.is_valid() :
+        if form.is_valid():
+
             bb = form.save()
-            formset.save()
-            messages.add_message(request, messages.SUCCESS, 'Объявление исправлено')
+            formset.save = AiFormSet(request.POST, request.FILES, instance=bb)
+
+            messages.add_message(request, messages.SUCCESS, "Объявление исправлено")
             return redirect('user')
-    else :
+    else:
         form = BbForm(instance=bb)
         formset = AiFormSet(instance=bb)
-
-    context = {'form' : form, 'formset' : formset}
+    context = {
+        'form': form,
+        'formset': formset,
+    }
     return render(request, 'main/profile_bb_change.html', context)
