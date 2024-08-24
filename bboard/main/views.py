@@ -13,7 +13,7 @@ from django.views.decorators.cache import cache_page
 from django.conf import settings
 
 from .models import Bb, Rubric, CustomUser
-from .forms import BbForm
+from .forms import BbForm, AiFormSet
 from .utils import user_view
 
 
@@ -147,8 +147,28 @@ class ChangeUserInfoView(SuccessMessageMixin, UpdateView):
 def profile_bb_delete(request, pk):
     bb = get_object_or_404(Bb, pk=pk)
     if bb.author != request.user:
-        return redirect('user')  # Запрет удаления чужих объявлений
+        return redirect('user')
     if request.method == 'POST':
         bb.delete()
         return redirect('user')
     return render(request, 'main/confirm_delete.html', {'bb': bb})
+
+
+def profile_bb_change(request, pk) :
+    bb = get_object_or_404(Bb, pk=pk)
+
+    if request.method == 'POST' :
+        form = BbForm(request.POST, request.FILES, instance=bb)
+        formset = AiFormSet(request.POST, request.FILES, instance=bb)
+
+        if form.is_valid() and formset.is_valid() :
+            bb = form.save()  # Save the Bb form
+            formset.save()  # Save the formset
+            messages.add_message(request, messages.SUCCESS, 'Объявление исправлено')
+            return redirect('user')
+    else :
+        form = BbForm(instance=bb)  # Pre-fill with existing data
+        formset = AiFormSet(instance=bb)  # Pre-fill with existing data
+
+    context = {'form' : form, 'formset' : formset}
+    return render(request, 'main/profile_bb_change.html', context)

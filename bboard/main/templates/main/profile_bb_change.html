@@ -1,0 +1,23 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+
+{% block link %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/CSS/create.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>Редактирование объявления: {{ bb.title }}</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ formset.management_form }}
+    {% for form in formset %}
+        {{ form.as_p }}
+    {% endfor %}
+    <button type="submit">Сохранить изменения</button>
+</form>
+
+<a href="{% url 'user' %}">Отменить</a>
+
+{% endblock %}

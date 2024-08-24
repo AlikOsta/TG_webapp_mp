@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, inlineformset_factory
 from django import forms
 from .models import Bb, AdditionalImage
 from django.contrib.auth.forms import UserCreationForm
@@ -12,7 +12,7 @@ class BbForm(forms.ModelForm):
     class Meta:
         model = Bb
         fields = ['rubric', 'title', 'content', 'price', 'currency', 'city']
-
+        widgets = {'author': forms.HiddenInput}
 
     def save(self, commit=True):
         bb = super().save(commit=False)
@@ -23,6 +23,9 @@ class BbForm(forms.ModelForm):
             if image:
                 AdditionalImage.objects.create(bb=bb, image=image)
         return bb
+
+
+AiFormSet = inlineformset_factory(Bb, AdditionalImage, fields='__all__')
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -37,7 +40,6 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class ChaserUserInfoForm(forms.ModelForm):
-    # username = forms.CharField(required=True, label='Имя')
     class Meta:
         model = CustomUser
         fields = [ 'username', 'image' ]

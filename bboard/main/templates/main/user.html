@@ -43,6 +43,11 @@
                                 {% csrf_token %}
                                 <input type="submit" value="Удалить">
                             </form>
+
+                            <form action="{% url 'profile_bb_change' pk=bb.pk %}" method="post" style="display:inline;" onsubmit="return confirmDelete(this);">
+                                {% csrf_token %}
+                                <input type="submit" value="Редактировать">
+                            </form>
                         </div>
                     </div>
                 </a>
@@ -55,16 +60,6 @@
     <p><input type="submit" value="Разместить объявления"></p>
     </a>
 {%  endif %}
-
-<script>
-function confirmDelete(form) {
-    if (confirm("Вы уверены, что хотите удалить это объявление?")) {
-        return true; // Отправляем форму
-    } else {
-        return false; // Отменяем отправку
-    }
-}
-</script>
 
 
 {% endblock %}
