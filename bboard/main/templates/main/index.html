@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block content %}
+
 <div class="wr_container">
     <div class="container">
         {% for rubric in rubrics %}
@@ -20,7 +21,7 @@
     </div>
 </div>
 
-<!--Карточки с товаром-->
+
 <div class="wr_content">
     <div id="bb-container" class="wr_card">
         {% include "main/bb_list_ajax.html" with page_obj=page_obj %}

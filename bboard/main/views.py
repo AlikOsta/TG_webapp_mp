@@ -32,8 +32,6 @@ def user(request) :
 
     len_bb = len(bbs)
 
-    print(len_bb)
-
     context={
         'user' : current_user,
         'page_obj': page_obj,
@@ -81,16 +79,16 @@ def by_rubric(request, pk):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         return render(request, 'main/bb_list_ajax.html', {'page_obj': page_obj})
 
-    data = {
+    context = {
         'page_obj': page_obj,
         'rubric': rubric,
     }
-    return render(request, 'main/by_rubric.html', context=data)
+    return render(request, 'main/by_rubric.html', context)
 
 
 def favorites(request):
-    data = {'title': 'favorites'}
-    return render(request, 'main/favorites.html', context=data)
+    context = {'title': 'favorites'}
+    return render(request, 'main/favorites.html', context)
 
 
 
@@ -129,9 +127,6 @@ def create_bb(request):
     return render(request, 'create.html', {'form': form})
 
 
-
-
-
 class ChangeUserInfoView(SuccessMessageMixin, UpdateView):
     model = CustomUser
     template_name = 'main/change_user_info.html'
@@ -147,3 +142,13 @@ class ChangeUserInfoView(SuccessMessageMixin, UpdateView):
         if not queryset:
             queryset = self.get_queryset()
         return get_object_or_404(queryset, pk=self.user_id)
+
+
+def profile_bb_delete(request, pk):
+    bb = get_object_or_404(Bb, pk=pk)
+    if bb.author != request.user:
+        return redirect('user')  # Запрет удаления чужих объявлений
+    if request.method == 'POST':
+        bb.delete()
+        return redirect('user')
+    return render(request, 'main/confirm_delete.html', {'bb': bb})

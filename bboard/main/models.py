@@ -77,8 +77,8 @@ class Bb(models.Model):
             self.is_active = False
             self.save()
 
-    def delete(self, *args, **kwargs):
-        for ai in self.additionalimage_set.all():
+    def delete(self, *args, **kwargs) :
+        for ai in self.additional_images.all() :
             ai.delete()
         super().delete(*args, **kwargs)
 
@@ -143,7 +143,7 @@ class City(models.Model):
 
 
 class AdditionalImage(models.Model):
-    bb = models.ForeignKey('Bb', on_delete=models.CASCADE, related_name='additional_images', verbose_name='Объявление')
+    bb = models.ForeignKey(Bb, related_name='additional_images', on_delete=models.CASCADE, verbose_name='Объявления')
     image = models.ImageField(upload_to='images/', verbose_name='Изображение')
 
     def __str__(self):

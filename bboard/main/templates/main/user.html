@@ -24,7 +24,29 @@
     <h1>Мои объявления ({{ len_bb }})</h1>
     <div class="wr_content">
         <div id="bb-container" class="wr_card">
-            {% include "main/bb_list_ajax.html" with page_obj=page_obj %}
+            {% for bb in page_obj %}
+                <a class="link_card" href="{% url 'detail' rubric_pk=bb.rubric.pk pk=bb.pk %}">
+                    <div class="card">
+                        {% if bb.additional_images.exists %}
+                            <div class="image-gallery">
+                                <img class="img_card" src="{{ bb.additional_images.first.image.url }}" alt="First additional image">
+                            </div>
+                        {% else %}
+                            <img class="img_card" src="{% static 'main/no_photo_bb.png' %}" alt="Placeholder image">
+                        {% endif %}
+                        <div>
+                            <p class="title_card">{{ bb.title }}</p>
+                            <p class="content_card">{{ bb.content }}</p>
+                            <p class="pra_card">{{ bb.price }} {{ bb.currency }}</p>
+                            <p class="date_card">{{ bb.city }} {{ bb.published|date:"d.m.Y" }}</p>
+                             <form action="{% url 'profile_bb_delete' pk=bb.pk %}" method="post" style="display:inline;" onsubmit="return confirmDelete(this);">
+                                {% csrf_token %}
+                                <input type="submit" value="Удалить">
+                            </form>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
         </div>
     </div>
 {% else %}
@@ -33,5 +55,16 @@
     <p><input type="submit" value="Разместить объявления"></p>
     </a>
 {%  endif %}
+
+<script>
+function confirmDelete(form) {
+    if (confirm("Вы уверены, что хотите удалить это объявление?")) {
+        return true; // Отправляем форму
+    } else {
+        return false; // Отменяем отправку
+    }
+}
+</script>
+
 
 {% endblock %}
