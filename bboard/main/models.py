@@ -68,8 +68,7 @@ class Bb(models.Model):
     price = models.IntegerField(default=0, null=True, blank=True, verbose_name='Цена')
     published = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Опубликовано')
     is_active = models.BooleanField(default=True, verbose_name='Активно')
-    country = models.ForeignKey('Country', null=True, on_delete=models.PROTECT, verbose_name='Страна')
-    city = models.ForeignKey('City', null=True, on_delete=models.PROTECT, verbose_name='Город')
+    city = models.ForeignKey('SubLocation', null=True, on_delete=models.PROTECT, verbose_name='Город')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,  verbose_name='Автор')
 
     def check_expiration(self):
@@ -114,34 +113,6 @@ class Currency(models.Model):
         ordering = ['order']
 
 
-class Country(models.Model):
-    name = models.CharField(max_length=50, unique=True, db_index=True, verbose_name="Название")
-    order = models.SmallIntegerField(default=0, db_index=True, verbose_name='Порядок')
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name_plural = "Страны"
-        verbose_name = "Страна"
-        ordering = ['order']
-
-
-class City(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Город")
-    country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name='cities', verbose_name="Страна")
-    order = models.SmallIntegerField(default=0, db_index=True, verbose_name='Порядок')
-
-    def __str__(self):
-        return f"{self.name}, {self.country.name}"
-
-    class Meta:
-        verbose_name_plural = "Города"
-        verbose_name = "Город"
-        ordering = ['order']
-        unique_together = ['country', 'name']
-
-
 class AdditionalImage(models.Model):
     bb = models.ForeignKey(Bb, related_name='additional_images', on_delete=models.CASCADE, verbose_name='Объявления')
     image = models.ImageField(upload_to='images/', verbose_name='Изображение')
@@ -154,3 +125,43 @@ class AdditionalImage(models.Model):
         verbose_name = "Дополнительное изображение"
 
 
+class Location(models.Model):
+    name = models.CharField(max_length=20, db_index=True, unique=True, verbose_name="Название")
+    order = models.SmallIntegerField(default=0, db_index=True, verbose_name="Порядок")
+    super_location = models.ForeignKey("SuperLocation", on_delete=models.PROTECT, null=True, blank=True, verbose_name="Страна")
+
+
+class SuperLocationManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(super_location__isnull=True)
+
+
+class SuperLocation(Location):
+    objects = SuperLocationManager()
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        proxy = True
+        ordering = ('order', 'name')
+        verbose_name = 'Страна'
+        verbose_name_plural = 'Страны'
+
+
+class SubLocationManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(super_location__isnull=False)
+
+
+class SubLocation(Location):
+    objects = SubLocationManager()
+
+    def __str__(self):
+        return '%s, %s' % (self.super_location.name, self.name)
+
+    class Meta:
+        proxy = True
+        ordering = ('super_location__order', 'super_location__name', 'order', 'name')
+        verbose_name = 'Город'
+        verbose_name_plural = 'Города'

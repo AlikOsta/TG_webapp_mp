@@ -3,8 +3,15 @@ from django import forms
 from .models import Bb, AdditionalImage
 from django.contrib.auth.forms import UserCreationForm
 from .models import CustomUser
+from .models import SuperLocation, SubLocation
 
 
+class SubLocationForm(forms.ModelForm):
+    super_location = forms.ModelChoiceField(queryset=SuperLocation.objects.all(), empty_label=None, label='Страна', required=True)
+
+    class Meta:
+        model = SubLocation
+        fields = '__all__'
 
 class BbForm(forms.ModelForm):
     image = forms.ImageField(required=False, label="Изображения")

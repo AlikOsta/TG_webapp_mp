@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Bb, Rubric, Currency, Country, City, AdditionalImage, CustomUser
+from .models import Bb, Rubric, Currency, SuperLocation, SubLocation, AdditionalImage, CustomUser
 from django.contrib.auth.admin import UserAdmin
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, SubLocationForm
 
 
 class CustomUserAdmin(UserAdmin):
@@ -23,12 +23,24 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ('telegram_id', 'username',)
     ordering = ('telegram_id',)
 
-admin.site.register(CustomUser, CustomUserAdmin)
 
 
 class AdditionalImageInline(admin.TabularInline):
     model = AdditionalImage
     extra = 1
+
+
+class SubLocationInline(admin.TabularInline):
+    model = SubLocation
+
+
+class SuperLocationAdmin(admin.ModelAdmin):
+    exclude = ("super_location",)
+    inlines = (SubLocationInline,)
+
+
+class SubLocationAdmin(admin.ModelAdmin):
+    form = SubLocationForm
 
 
 class BbAdmin(admin.ModelAdmin):
@@ -43,5 +55,6 @@ class BbAdmin(admin.ModelAdmin):
 admin.site.register(Bb, BbAdmin)
 admin.site.register(Rubric)
 admin.site.register(Currency)
-admin.site.register(Country)
-admin.site.register(City)
+admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(SuperLocation, SuperLocationAdmin)
+admin.site.register(SubLocation, SubLocationAdmin)

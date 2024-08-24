@@ -162,13 +162,13 @@ def profile_bb_change(request, pk) :
         formset = AiFormSet(request.POST, request.FILES, instance=bb)
 
         if form.is_valid() and formset.is_valid() :
-            bb = form.save()  # Save the Bb form
-            formset.save()  # Save the formset
+            bb = form.save()
+            formset.save()
             messages.add_message(request, messages.SUCCESS, 'Объявление исправлено')
             return redirect('user')
     else :
-        form = BbForm(instance=bb)  # Pre-fill with existing data
-        formset = AiFormSet(instance=bb)  # Pre-fill with existing data
+        form = BbForm(instance=bb)
+        formset = AiFormSet(instance=bb)
 
     context = {'form' : form, 'formset' : formset}
     return render(request, 'main/profile_bb_change.html', context)
