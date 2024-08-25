@@ -2,7 +2,7 @@ from bboard import settings
 from django.urls import path
 from django.conf.urls.static import static
 
-from .views import index, by_rubric, BbCreateView, detail, favorites, user, ChangeUserInfoView, profile_bb_delete, profile_bb_change
+from .views import index, by_rubric, BbCreateView, detail, favorites, user, ChangeUserInfoView, profile_bb_delete, profile_bb_change, toggle_favorite
 from .utils import user_view
 
 
@@ -12,6 +12,7 @@ urlpatterns = [
     path('<int:pk>/', by_rubric, name='by_rubric'), # рубрики
     path('', index, name='index'), # главная страница
     path('favorites/', favorites, name='favorites'), # избранное для пользователя
+    path('favorites/toggle/<int:bb_pk>/', toggle_favorite, name='toggle_favorite'),
     path('web-app/', user_view, name='web-app'), # для получения данных от тг
     path('user/change/', ChangeUserInfoView.as_view(), name='user_change'),
     path('user/', user, name='user'), # пользователь

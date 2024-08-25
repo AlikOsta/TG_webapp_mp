@@ -166,3 +166,14 @@ class SubLocation(Location):
         ordering = ('super_location__order', 'super_location__name', 'order', 'name')
         verbose_name = 'Город'
         verbose_name_plural = 'Города'
+
+
+class Favorite(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='favorites')
+    bb = models.ForeignKey('Bb', on_delete=models.CASCADE, related_name='favorited_by')
+
+    class Meta:
+        unique_together = ('user', 'bb')
+
+    def __str__(self):
+        return f"{self.user.username} добавил {self.bb.title} в избранное"

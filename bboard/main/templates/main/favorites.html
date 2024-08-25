@@ -1,12 +1,31 @@
-{% extends "layout/basic.html" %}
+{% extends 'layout/basic.html' %}
 {% load static %}
+
+{% block link %}
+    <link rel="stylesheet" type="text/css" href="{% static 'main/CSS/index.css' %}">
+{% endblock %}
 
 
 {% block content %}
+    <h1>Избранное</h1>
 
-<div>
-    <h2>{{ title }}</h2>
-
-</div>
-
+    <div class="wr_content">
+        {% for favorite in user.favorites.all %}
+            <a class="link_card" href="{% url 'detail' rubric_pk=favorite.bb.rubric.pk pk=favorite.bb.pk %}">
+                <div class="card">
+                    {% if favorite.bb.additional_images.exists %}
+                        <img class="img_card" src="{{ favorite.bb.additional_images.first.image.url }}" alt="First additional image">
+                    {% else %}
+                        <img class="img_card" src="{% static 'main/no_photo_bb.png' %}" alt="Placeholder image">
+                    {% endif %}
+                    <div>
+                        <p class="title_card">{{ favorite.bb.title }}</p>
+                        <p class="content_card">{{ favorite.bb.content }}</p>
+                        <p class="pra_card">{{ favorite.bb.price }} {{ favorite.bb.currency }}</p>
+                        <p class="date_card">{{ favorite.bb.city }} {{ favorite.bb.published|date:"d.m.Y" }}</p>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
 {% endblock %}
