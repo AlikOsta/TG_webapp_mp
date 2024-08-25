@@ -2,30 +2,66 @@
 {% load static %}
 {% block link %}
     <link rel="stylesheet" type="text/css" href="{% static 'main/CSS/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/CSS/user.css' %}">
 {% endblock %}
 
 {% block content %}
+<div class="wrapper">
 
-<div>
-    <h1>Привет, {{ user.username }}!</h1>
-    <p>Фото
-        {% if user.image %}
-            <img src="{{ user.image.url }}" style="max-width: 200px; max-height: 200px; border: 1px solid #ddd; border-radius: 50%;">
-        {% else %}
-            <p>No image available</p>
-            <img class="img_card" src="{% static 'main/no_photo_user.png' %}" alt="Placeholder image">
-        {% endif %}
-    </p>
-    <p>Имя в Telegram: {{ user.tg_name }}</p>
-    <p>Telegram ID: {{ user.telegram_id }}</p>
+    <div class="wr_user_info">
+        <div class="user_details">
+            <h2 class="user_name">{{ user.username }}</h2>
+            <div class="user_rating">
+                <div class="rating_user">4.9</div>
+
+                <div class="wr_star_rating_user">
+                    <svg class="Icon-svg-Nue9W" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" fill="#ffb021" d="M10 14.9901L5.07814 18.249C4.82603 18.4159 4.4864 18.3467 4.31954 18.0945C4.23209 17.9623 4.20618 17.7987 4.24852 17.6459L5.82561 11.956L1.20664 8.28007C0.970049 8.09178 0.930825 7.74726 1.11904 7.51057C1.21768 7.38651 1.36522 7.3113 1.52353 7.30438L7.42009 7.04662L9.48727 1.51595C9.59316 1.23266 9.90855 1.08888 10.1917 1.19481C10.3402 1.25033 10.4572 1.36747 10.5127 1.51595L12.5799 7.04662L18.4765 7.30438C18.7785 7.31758 19.0127 7.57324 18.9995 7.8754C18.9925 8.03378 18.9174 8.18138 18.7934 8.28007L14.1744 11.956L15.7515 17.6459C15.8323 17.9374 15.6616 18.2392 15.3703 18.32C15.2176 18.3624 15.054 18.3364 14.9219 18.249L10 14.9901Z">\
+                        </path>
+                    </svg>
+
+                    <svg class="Icon-svg-Nue9W" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" fill="#ffb021" d="M10 14.9901L5.07814 18.249C4.82603 18.4159 4.4864 18.3467 4.31954 18.0945C4.23209 17.9623 4.20618 17.7987 4.24852 17.6459L5.82561 11.956L1.20664 8.28007C0.970049 8.09178 0.930825 7.74726 1.11904 7.51057C1.21768 7.38651 1.36522 7.3113 1.52353 7.30438L7.42009 7.04662L9.48727 1.51595C9.59316 1.23266 9.90855 1.08888 10.1917 1.19481C10.3402 1.25033 10.4572 1.36747 10.5127 1.51595L12.5799 7.04662L18.4765 7.30438C18.7785 7.31758 19.0127 7.57324 18.9995 7.8754C18.9925 8.03378 18.9174 8.18138 18.7934 8.28007L14.1744 11.956L15.7515 17.6459C15.8323 17.9374 15.6616 18.2392 15.3703 18.32C15.2176 18.3624 15.054 18.3364 14.9219 18.249L10 14.9901Z">\
+                        </path>
+                    </svg>
+
+                    <svg class="Icon-svg-Nue9W" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" fill="#ffb021" d="M10 14.9901L5.07814 18.249C4.82603 18.4159 4.4864 18.3467 4.31954 18.0945C4.23209 17.9623 4.20618 17.7987 4.24852 17.6459L5.82561 11.956L1.20664 8.28007C0.970049 8.09178 0.930825 7.74726 1.11904 7.51057C1.21768 7.38651 1.36522 7.3113 1.52353 7.30438L7.42009 7.04662L9.48727 1.51595C9.59316 1.23266 9.90855 1.08888 10.1917 1.19481C10.3402 1.25033 10.4572 1.36747 10.5127 1.51595L12.5799 7.04662L18.4765 7.30438C18.7785 7.31758 19.0127 7.57324 18.9995 7.8754C18.9925 8.03378 18.9174 8.18138 18.7934 8.28007L14.1744 11.956L15.7515 17.6459C15.8323 17.9374 15.6616 18.2392 15.3703 18.32C15.2176 18.3624 15.054 18.3364 14.9219 18.249L10 14.9901Z">\
+                        </path>
+                    </svg>
+
+                    <svg class="Icon-svg-Nue9W" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" fill="#ffb021" d="M10 14.9901L5.07814 18.249C4.82603 18.4159 4.4864 18.3467 4.31954 18.0945C4.23209 17.9623 4.20618 17.7987 4.24852 17.6459L5.82561 11.956L1.20664 8.28007C0.970049 8.09178 0.930825 7.74726 1.11904 7.51057C1.21768 7.38651 1.36522 7.3113 1.52353 7.30438L7.42009 7.04662L9.48727 1.51595C9.59316 1.23266 9.90855 1.08888 10.1917 1.19481C10.3402 1.25033 10.4572 1.36747 10.5127 1.51595L12.5799 7.04662L18.4765 7.30438C18.7785 7.31758 19.0127 7.57324 18.9995 7.8754C18.9925 8.03378 18.9174 8.18138 18.7934 8.28007L14.1744 11.956L15.7515 17.6459C15.8323 17.9374 15.6616 18.2392 15.3703 18.32C15.2176 18.3624 15.054 18.3364 14.9219 18.249L10 14.9901Z">\
+                        </path>
+                    </svg>
+
+                    <svg class="Icon-svg-Nue9W" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" fill="#ffb021" d="M10 14.9901L5.07814 18.249C4.82603 18.4159 4.4864 18.3467 4.31954 18.0945C4.23209 17.9623 4.20618 17.7987 4.24852 17.6459L5.82561 11.956L1.20664 8.28007C0.970049 8.09178 0.930825 7.74726 1.11904 7.51057C1.21768 7.38651 1.36522 7.3113 1.52353 7.30438L7.42009 7.04662L9.48727 1.51595C9.59316 1.23266 9.90855 1.08888 10.1917 1.19481C10.3402 1.25033 10.4572 1.36747 10.5127 1.51595L12.5799 7.04662L18.4765 7.30438C18.7785 7.31758 19.0127 7.57324 18.9995 7.8754C18.9925 8.03378 18.9174 8.18138 18.7934 8.28007L14.1744 11.956L15.7515 17.6459C15.8323 17.9374 15.6616 18.2392 15.3703 18.32C15.2176 18.3624 15.054 18.3364 14.9219 18.249L10 14.9901Z">\
+                        </path>
+                    </svg>
+                </div>
+
+                <div class="number_of_reviews">100 отзывов</div>
+            </div>
+            <p class="user_info">Мой Telegram: {{ user.tg_name }}</p>
+            <p class="user_info">Telegram ID: {{ user.telegram_id }}</p>
+        </div>
+        <div class="user_image_wrapper">
+            <a href="{% url 'user_change' %}" class="edit_info_user">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 72 72">
+                    <path d="M38.406 22.234l11.36 11.36L28.784 54.576l-12.876 4.307c-1.725.577-3.367-1.065-2.791-2.79l4.307-12.876L38.406 22.234zM41.234 19.406l5.234-5.234c1.562-1.562 4.095-1.562 5.657 0l5.703 5.703c1.562 1.562 1.562 4.095 0 5.657l-5.234 5.234L41.234 19.406z"></path>
+                </svg>
+            </a>
+            {% if user.image %}
+                <img class="img_card" src="{{ user.image.url }}" alt="User Image">
+            {% else %}
+                <img class="img_card" src="{% static 'main/no_photo_user.png' %}" alt="Placeholder image">
+            {% endif %}
+        </div>
+    </div>
+
 </div>
 
-
-<a href="{% url 'user_change' %}">
-<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 72 72">
-<path d="M38.406 22.234l11.36 11.36L28.784 54.576l-12.876 4.307c-1.725.577-3.367-1.065-2.791-2.79l4.307-12.876L38.406 22.234zM41.234 19.406l5.234-5.234c1.562-1.562 4.095-1.562 5.657 0l5.703 5.703c1.562 1.562 1.562 4.095 0 5.657l-5.234 5.234L41.234 19.406z"></path>
-</svg>
-</a>
 
     <hr>
 
@@ -47,23 +83,27 @@
                             <p class="title_card">{{ bb.title }}</p>
                             <p class="content_card">{{ bb.content }}</p>
                             <p class="pra_card">{{ bb.price }} {{ bb.currency }}</p>
-                            <p class="date_card">{{ bb.city }} {{ bb.published|date:"d.m.Y" }}</p>
-                            <form action="{% url 'profile_bb_delete' pk=bb.pk %}" method="post" style="display:inline;" onsubmit="return confirmDelete(this);">
-                                {% csrf_token %}
-                                <button type="submit" style="background: none; border: none; cursor: pointer;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M 21 2 C 19.354545 2 18 3.3545455 18 5 L 18 7 L 8 7 A 1.0001 1.0001 0 1 0 8 9 L 9 9 L 9 45 C 9 46.654 10.346 48 12 48 L 38 48 C 39.654 48 41 46.654 41 45 L 41 9 L 42 9 A 1.0001 1.0001 0 1 0 42 7 L 32 7 L 32 5 C 32 3.3545455 30.645455 2 29 2 L 21 2 z M 21 4 L 29 4 C 29.554545 4 30 4.4454545 30 5 L 30 7 L 20 7 L 20 5 C 20 4.4454545 20.445455 4 21 4 z M 19 14 C 19.552 14 20 14.448 20 15 L 20 40 C 20 40.553 19.552 41 19 41 C 18.448 41 18 40.553 18 40 L 18 15 C 18 14.448 18.448 14 19 14 z M 25 14 C 25.552 14 26 14.448 26 15 L 26 40 C 26 40.553 25.552 41 25 41 C 24.448 41 24 40.553 24 40 L 24 15 C 24 14.448 24.448 14 25 14 z M 31 14 C 31.553 14 32 14.448 32 15 L 32 40 C 32 40.553 31.553 41 31 41 C 30.447 41 30 40.553 30 40 L 30 15 C 30 14.448 30.447 14 31 14 z"></path>
-                                    </svg>
-                                </button>
-                            </form>
-                            <form action="{% url 'profile_bb_change' pk=bb.pk %}" method="post" style="display:inline;" onsubmit="return confirmDelete(this);">
-                                {% csrf_token %}
-                                <button type="submit" style="background: none; border: none; cursor: pointer;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 72 72" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M38.406 22.234l11.36 11.36L28.784 54.576l-12.876 4.307c-1.725.577-3.367-1.065-2.791-2.79l4.307-12.876L38.406 22.234zM41.234 19.406l5.234-5.234c1.562-1.562 4.095-1.562 5.657 0l5.703 5.703c1.562 1.562 1.562 4.095 0 5.657l-5.234 5.234L41.234 19.406z"></path>
-                                    </svg>
-                                </button>
-                            </form>
+                            <p class="date_card">{{ bb.city }} {{ bb.published|date:"d.m.y" }}</p>
+
+                            <div class="wr_swg">
+                                <form action="{% url 'profile_bb_delete' pk=bb.pk %}" method="post" style="display:inline;" onsubmit="return confirmDelete(this);">
+                                    {% csrf_token %}
+                                    <button type="submit" style="background: none; border: none; cursor: pointer;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M 21 2 C 19.354545 2 18 3.3545455 18 5 L 18 7 L 8 7 A 1.0001 1.0001 0 1 0 8 9 L 9 9 L 9 45 C 9 46.654 10.346 48 12 48 L 38 48 C 39.654 48 41 46.654 41 45 L 41 9 L 42 9 A 1.0001 1.0001 0 1 0 42 7 L 32 7 L 32 5 C 32 3.3545455 30.645455 2 29 2 L 21 2 z M 21 4 L 29 4 C 29.554545 4 30 4.4454545 30 5 L 30 7 L 20 7 L 20 5 C 20 4.4454545 20.445455 4 21 4 z M 19 14 C 19.552 14 20 14.448 20 15 L 20 40 C 20 40.553 19.552 41 19 41 C 18.448 41 18 40.553 18 40 L 18 15 C 18 14.448 18.448 14 19 14 z M 25 14 C 25.552 14 26 14.448 26 15 L 26 40 C 26 40.553 25.552 41 25 41 C 24.448 41 24 40.553 24 40 L 24 15 C 24 14.448 24.448 14 25 14 z M 31 14 C 31.553 14 32 14.448 32 15 L 32 40 C 32 40.553 31.553 41 31 41 C 30.447 41 30 40.553 30 40 L 30 15 C 30 14.448 30.447 14 31 14 z"></path>
+                                        </svg>
+                                    </button>
+                                </form>
+
+                                <form action="{% url 'profile_bb_change' pk=bb.pk %}" method="post" style="display:inline;" onsubmit="return confirmDelete(this);">
+                                    {% csrf_token %}
+                                    <button type="submit" style="background: none; border: none; cursor: pointer;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 72 72" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M38.406 22.234l11.36 11.36L28.784 54.576l-12.876 4.307c-1.725.577-3.367-1.065-2.791-2.79l4.307-12.876L38.406 22.234zM41.234 19.406l5.234-5.234c1.562-1.562 4.095-1.562 5.657 0l5.703 5.703c1.562 1.562 1.562 4.095 0 5.657l-5.234 5.234L41.234 19.406z"></path>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
 
                         </div>
                     </div>
@@ -80,3 +120,4 @@
 
 
 {% endblock %}
+

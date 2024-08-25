@@ -3,22 +3,27 @@
 
 {% block link %}
 <link rel="stylesheet" type="text/css" href="{% static 'main/CSS/index.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'main/CSS/slide_rubric.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'main/CSS/by_rubric.css' %}">
 {% endblock %}
 
 {% block content %}
 
-<h1>{{ rubric.name }}</h1>
-
-<!-- Форма поиска -->
-<div>
-    <form method="get">
-        <input type="text" name="keyword" placeholder="Поиск..." />
-        <button type="submit">Искать</button>
+<div class="wr_container">
+    <div class="container">
+        <section class="child">
+            <div class="title_rub">{{ rubric.name }}</div>
+            <img class="img_rub" src="{% static 'main/img_cat/cat_' %}{{ rubric.order }}.png" alt="{{ rubric.name }}">
+        </section>
+</div>
+<div class="search-container">
+    <form method="get" class="search-form">
+        <input type="text" name="keyword" placeholder="Поиск..." class="search-input" />
+        <button type="submit" class="search-button">Искать</button>
     </form>
 </div>
-    <div>
-    <a href="javascript:history.back()" class="back-button">← Назад</a>
-</div>
+
+
 
 
 <!-- Контейнер для объявлений -->

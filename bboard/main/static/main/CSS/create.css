@@ -1,5 +1,6 @@
 
 form {
+    position: relative;
     width: 90vw;
     margin: 0 auto;
     padding: 20px;
@@ -39,6 +40,19 @@ input[type="submit"] {
     color: white;
     font-size: 18px;
     cursor: pointer;
+}
+
+.close_button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
+.close_button svg {
+    width: 40px;
+    height: 40px;
+    fill: black; /* Цвет иконки можно изменить по своему вкусу */
 }
 
 

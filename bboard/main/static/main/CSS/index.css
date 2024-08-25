@@ -2,12 +2,16 @@
 /* Стили карточек с товаром */
 .wr_content {
     padding: 0 10px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+
 }
 
 .wr_card {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 15px;
+    gap: 10px;
 
 }
 
@@ -77,27 +81,18 @@
     border-radius: 10px;
 }
 
-/*!* Адаптивные стили *!*/
-/*@media (max-width: 600px) {*/
-/*    .child {*/
-/*        min-width: 90px;*/
-/*        padding: 8px;*/
-/*    }*/
+.wr_swg{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column-reverse;
+}
 
-/*    .wr_card {*/
-/*        grid-template-columns: 1fr;*/
-/*    }*/
 
-/*    .title_card {*/
-/*        font-size: 20px;*/
-
-/*    }*/
-
-/*    .pra_card {*/
-/*        font-size: 16px;*/
-/*    }*/
-
-/*    .date_card {*/
-/*        font-size: 10px;*/
-/*    }*/
-/*}*/
+.wr_swg svg {
+    width: 24px;
+    height: 24px;
+    /*fill: black;*/
+}

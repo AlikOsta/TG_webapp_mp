@@ -1,12 +1,21 @@
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Ошибка авторизации</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'main/CSS/invalid_signature.css' %}">
 </head>
+
 <body>
+<div class="wr_err">
     <h1>Ошибка авторизации</h1>
     <p>Для входа на сайт используйте Телеграм бота @test_bot_dj_bot</p>
+    <a href="https://web.telegram.org/k/#@test_bot_dj_bot">
+    <p><input type="submit" value="Перейти в бота"></p>
+    </a>
+</div>
+
 </body>
 </html>

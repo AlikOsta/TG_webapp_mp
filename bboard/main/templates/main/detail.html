@@ -10,21 +10,48 @@
 
 <div class="wr_detail">
 
-    <h1>{{ bb.title }}</h1>
+    <div class="wr_title">
+         <!-- Кнопка "Назад" -->
+        <div>
+            <a href="javascript:history.back()" class="back-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+                    <g fill="none" fill-rule="evenodd">
+                    <path d="M-4-4h24v24H-4z"/>
+                    <path fill="#000" fill-rule="nonzero" d="m3.414 7 4.793-4.793A1 1 0 0 0 6.793.793l-6.5 6.5a.997.997 0 0 0 0 1.414l6.5 6.5a1 1 0 1 0 1.414-1.414L3.414 9H15a1 1 0 0 0 0-2H3.414Z"/>
+                        <path fill="#000" fill-rule="nonzero" d="m3.414 7 4.793-4.793A1 1 0 0 0 6.793.793l-6.5 6.5a.997.997 0 0 0 0 1.414l6.5 6.5a1 1 0 1 0 1.414-1.414L3.414 9H15a1 1 0 0 0 0-2H3.414Z"/>
+                </g></svg>
+            </a>
+        </div>
 
-    <div>
-        <a href="javascript:history.back()" class="back-button">← Назад</a>
+        <h2 class="bb_title">{{ bb.title }}</h2>
+
+        <!-- Кнопка для добавления/удаления из избранного -->
+        <div class="wr_swg">
+            <a href="{% url 'toggle_favorite' bb_pk=bb.pk %}">
+                <div>
+                    {% if bb.is_favorite %}
+                        <svg width="24" height="24" fill="red" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                    {% else %}
+                        <svg width="24" height="24" fill="grey" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                    {% endif %}
+                </div>
+            </a>
+        </div>
     </div>
 
-
+    <!-- Галерея изображений -->
     {% if bb.additional_images.exists %}
         <div class="image-gallery">
             <div class="wr_container">
                 <div class="container">
                     {% for image in bb.additional_images.all %}
                         <section class="child">
-                            <a href="{{ image.image.url }}" data-lightbox="image-gallery" data-title="Additional image">
-                                <img class="img_card" src="{{ image.image.url }}" alt="Additional image">
+                            <a href="{{ image.image.url }}" data-lightbox="image-gallery" data-title="Изображение объявления">
+                                <img class="img_gallery" src="{{ image.image.url }}" alt="Изображение объявления">
                             </a>
                         </section>
                     {% endfor %}
@@ -32,24 +59,73 @@
             </div>
         </div>
     {% else %}
-        <img class="img_card" src="{% static 'main/no_photo_bb.png' %}" alt="Placeholder image">
+        <img class="img_card" src="{% static 'main/no_photo_bb.png' %}" alt="Нет изображения">
     {% endif %}
 
-    <p>Описание: {{ bb.content }}</p>
-    <p>Цена: {{ bb.price }} {{ bb.currency }}</p>
-    <p>Категория: {{ bb.rubric }}</p>
-    <p>Продавец: {{ bb.author.username }}</p>
-    <p>Контакты продавца: @{{ bb.author.telegram_id }}</p>
-    {% if bb.author.image %}
-        <img src="{{ bb.author.image.url }}" style="max-width: 200px; max-height: 200px; border: 1px solid #ddd; border-radius: 50%;">
-    {% else %}
-        <img src="{% static 'main/no_photo_user.png' %}" alt="Нет изображения" style="max-width: 200px; max-height: 200px; border: 1px solid #ddd; border-radius: 50%;">
-    {% endif %}
-    <p>В продаже: {{ bb.is_active }}</p>
-    <p>Добавлено {{ bb.published|date:"d.m.Y" }}</p>
+
+
+    <p class="wr_price">{{ bb.price }} {{ bb.currency }}</p>
+
+    <h4>Описание:</h4>
+    <p> {{ bb.content }}</p>
+
+    <p class="footer_title"> {{ bb.city }}, c {{ bb.published|date:"d.m.y" }}</p>
+    <p class="footer_title">10000 просмотров</p>
+
+
+    <div class="wrapper">
+        <div class="wr_user_info">
+            <div class="user_details">
+
+                <h2 class="user_name">{{ user.username }}</h2>
+                <div class="user_rating">
+
+                    <div class="rating_user">4.9</div>
+
+                    <div class="wr_star_rating_user">
+                        <svg class="Icon-svg-Nue9W" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" fill="#ffb021" d="M10 14.9901L5.07814 18.249C4.82603 18.4159 4.4864 18.3467 4.31954 18.0945C4.23209 17.9623 4.20618 17.7987 4.24852 17.6459L5.82561 11.956L1.20664 8.28007C0.970049 8.09178 0.930825 7.74726 1.11904 7.51057C1.21768 7.38651 1.36522 7.3113 1.52353 7.30438L7.42009 7.04662L9.48727 1.51595C9.59316 1.23266 9.90855 1.08888 10.1917 1.19481C10.3402 1.25033 10.4572 1.36747 10.5127 1.51595L12.5799 7.04662L18.4765 7.30438C18.7785 7.31758 19.0127 7.57324 18.9995 7.8754C18.9925 8.03378 18.9174 8.18138 18.7934 8.28007L14.1744 11.956L15.7515 17.6459C15.8323 17.9374 15.6616 18.2392 15.3703 18.32C15.2176 18.3624 15.054 18.3364 14.9219 18.249L10 14.9901Z">\
+                            </path>
+                        </svg>
+
+                        <svg class="Icon-svg-Nue9W" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" fill="#ffb021" d="M10 14.9901L5.07814 18.249C4.82603 18.4159 4.4864 18.3467 4.31954 18.0945C4.23209 17.9623 4.20618 17.7987 4.24852 17.6459L5.82561 11.956L1.20664 8.28007C0.970049 8.09178 0.930825 7.74726 1.11904 7.51057C1.21768 7.38651 1.36522 7.3113 1.52353 7.30438L7.42009 7.04662L9.48727 1.51595C9.59316 1.23266 9.90855 1.08888 10.1917 1.19481C10.3402 1.25033 10.4572 1.36747 10.5127 1.51595L12.5799 7.04662L18.4765 7.30438C18.7785 7.31758 19.0127 7.57324 18.9995 7.8754C18.9925 8.03378 18.9174 8.18138 18.7934 8.28007L14.1744 11.956L15.7515 17.6459C15.8323 17.9374 15.6616 18.2392 15.3703 18.32C15.2176 18.3624 15.054 18.3364 14.9219 18.249L10 14.9901Z">\
+                            </path>
+                        </svg>
+
+                        <svg class="Icon-svg-Nue9W" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" fill="#ffb021" d="M10 14.9901L5.07814 18.249C4.82603 18.4159 4.4864 18.3467 4.31954 18.0945C4.23209 17.9623 4.20618 17.7987 4.24852 17.6459L5.82561 11.956L1.20664 8.28007C0.970049 8.09178 0.930825 7.74726 1.11904 7.51057C1.21768 7.38651 1.36522 7.3113 1.52353 7.30438L7.42009 7.04662L9.48727 1.51595C9.59316 1.23266 9.90855 1.08888 10.1917 1.19481C10.3402 1.25033 10.4572 1.36747 10.5127 1.51595L12.5799 7.04662L18.4765 7.30438C18.7785 7.31758 19.0127 7.57324 18.9995 7.8754C18.9925 8.03378 18.9174 8.18138 18.7934 8.28007L14.1744 11.956L15.7515 17.6459C15.8323 17.9374 15.6616 18.2392 15.3703 18.32C15.2176 18.3624 15.054 18.3364 14.9219 18.249L10 14.9901Z">\
+                            </path>
+                        </svg>
+
+                        <svg class="Icon-svg-Nue9W" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" fill="#ffb021" d="M10 14.9901L5.07814 18.249C4.82603 18.4159 4.4864 18.3467 4.31954 18.0945C4.23209 17.9623 4.20618 17.7987 4.24852 17.6459L5.82561 11.956L1.20664 8.28007C0.970049 8.09178 0.930825 7.74726 1.11904 7.51057C1.21768 7.38651 1.36522 7.3113 1.52353 7.30438L7.42009 7.04662L9.48727 1.51595C9.59316 1.23266 9.90855 1.08888 10.1917 1.19481C10.3402 1.25033 10.4572 1.36747 10.5127 1.51595L12.5799 7.04662L18.4765 7.30438C18.7785 7.31758 19.0127 7.57324 18.9995 7.8754C18.9925 8.03378 18.9174 8.18138 18.7934 8.28007L14.1744 11.956L15.7515 17.6459C15.8323 17.9374 15.6616 18.2392 15.3703 18.32C15.2176 18.3624 15.054 18.3364 14.9219 18.249L10 14.9901Z">\
+                            </path>
+                        </svg>
+
+                        <svg class="Icon-svg-Nue9W" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" fill="#ffb021" d="M10 14.9901L5.07814 18.249C4.82603 18.4159 4.4864 18.3467 4.31954 18.0945C4.23209 17.9623 4.20618 17.7987 4.24852 17.6459L5.82561 11.956L1.20664 8.28007C0.970049 8.09178 0.930825 7.74726 1.11904 7.51057C1.21768 7.38651 1.36522 7.3113 1.52353 7.30438L7.42009 7.04662L9.48727 1.51595C9.59316 1.23266 9.90855 1.08888 10.1917 1.19481C10.3402 1.25033 10.4572 1.36747 10.5127 1.51595L12.5799 7.04662L18.4765 7.30438C18.7785 7.31758 19.0127 7.57324 18.9995 7.8754C18.9925 8.03378 18.9174 8.18138 18.7934 8.28007L14.1744 11.956L15.7515 17.6459C15.8323 17.9374 15.6616 18.2392 15.3703 18.32C15.2176 18.3624 15.054 18.3364 14.9219 18.249L10 14.9901Z">\
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user_image_wrapper">
+                {% if user.image %}
+                    <img class="img_card_detali" src="{{ user.image.url }}" alt="User Image">
+                {% else %}
+                    <img class="img_card_detali" src="{% static 'main/no_photo_user.png' %}" alt="Placeholder image">
+                {% endif %}
+            </div>
+        </div>
+        <div>
+            <a href="https://web.telegram.org/{{ bb.author.tg_name }}">
+                <input type="submit" value="Написать продавцу">
+            </a>
+        </div>
+    </div>
 </div>
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/js/lightbox-plus-jquery.min.js"></script>
 {% endblock %}

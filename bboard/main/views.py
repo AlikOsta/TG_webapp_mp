@@ -154,27 +154,29 @@ def profile_bb_delete(request, pk):
     return render(request, 'main/profile_bb_delete.html', {'bb': bb})
 
 
-def profile_bb_change(request, pk):
+def profile_bb_change(request, pk) :
     bb = get_object_or_404(Bb, pk=pk)
 
-    if request.method == 'POST':
+    if request.method == 'POST' :
         form = BbForm(request.POST, request.FILES, instance=bb)
         formset = AiFormSet(request.POST, request.FILES, instance=bb)
 
-        if form.is_valid() and formset.is_valid():
-            form.save()
-            formset.save()
-            messages.success(request, "Объявление исправлено")
+        if form.is_valid():
+
+            bb = form.save()
+            formset.save = AiFormSet(request.POST, request.FILES, instance=bb)
+
             return redirect('user')
     else:
         form = BbForm(instance=bb)
         formset = AiFormSet(instance=bb)
-
     context = {
         'form': form,
         'formset': formset,
     }
     return render(request, 'main/profile_bb_change.html', context)
+
+
 
 
 def toggle_favorite(request, bb_pk):
@@ -194,4 +196,17 @@ def toggle_favorite(request, bb_pk):
 
 def favorites(request):
     favorites = Favorite.objects.filter(user=request.user).select_related('bb__rubric', 'bb__currency')
-    return render(request, 'main/favorites.html', {'favorites': favorites})
+
+    # Формирование списка избранных объявлений с дополнительной информацией
+    favorite_list = []
+
+    for favorite in favorites:
+        favorite_list.append({
+            'bb': favorite.bb,
+            'is_favorite': True  # Поскольку это избранное, is_favorite всегда будет True
+        })
+
+    context = {
+        'favorite_list': favorite_list
+    }
+    return render(request, 'main/favorites.html', context)

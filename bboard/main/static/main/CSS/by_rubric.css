@@ -1,0 +1,55 @@
+
+/* Контейнер формы поиска */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 95%;
+    margin: 0 auto; /* Центрирование формы */
+}
+
+.search-form {
+    display: flex;
+    width: 100%;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили для поля ввода */
+.search-input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    border-radius: 8px 0 0 8px;
+}
+
+/* Стили для кнопки поиска */
+.search-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.container {
+    font-size: 22px;
+    font-weight: 700;
+    width: 95%;
+    height: 120px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    display: flex;
+    scroll-behavior: smooth;
+    border-radius: 8px;
+    margin: 20px auto 5px auto;
+    background-color: #ffffff;
+}
+
