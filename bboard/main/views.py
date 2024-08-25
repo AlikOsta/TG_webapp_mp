@@ -6,9 +6,10 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 
 from .models import Bb, Rubric, Favorite, CustomUser
-from .forms import BbForm, AiFormSet, ChaserUserInfoForm
+from .forms import BbForm, AiFormSet, ChaserUserInfoForm, SearchForm
 
 
 def get_favorite_status_for_bbs(user, bbs):
@@ -67,6 +68,15 @@ def by_rubric(request, pk):
     bbs = Bb.objects.filter(rubric=rubric, is_active=True).select_related('rubric', 'currency').prefetch_related('additional_images')
 
     get_favorite_status_for_bbs(request.user, bbs)
+# фильтрация объявлений по выбранному слову
+    if 'keyword' in request.GET:
+        keyword = request.GET['keyword']
+        q = Q(content__icontains=keyword) | Q(title__icontains=keyword)
+        bbs = Bb.objects.filter(q)
+    else:
+        keyword = ''
+
+    form = SearchForm(initial={'keyword': keyword})
 
     paginator = Paginator(bbs, 10)
     page_number = request.GET.get('page')
@@ -75,6 +85,7 @@ def by_rubric(request, pk):
     context = {
         'page_obj': page_obj,
         'rubric': rubric,
+        'form': form,
     }
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':

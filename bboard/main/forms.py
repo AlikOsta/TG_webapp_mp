@@ -63,3 +63,8 @@ class ChaserUserInfoForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ['username', 'image']
+
+
+# форма поиска
+class SearchForm(forms.Form):
+    keywords = forms.CharField(required=False, max_length=20, label='')

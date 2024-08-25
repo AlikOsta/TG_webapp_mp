@@ -9,12 +9,26 @@
 
 <h1>{{ rubric.name }}</h1>
 
+<!-- Форма поиска -->
+<div>
+    <form method="get">
+        <input type="text" name="keyword" placeholder="Поиск..." />
+        <button type="submit">Искать</button>
+    </form>
+</div>
+    <div>
+    <a href="javascript:history.back()" class="back-button">← Назад</a>
+</div>
+
+
+<!-- Контейнер для объявлений -->
 <div class="wr_content">
     <div id="bb-container" class="wr_card">
         {% include "main/bb_list_ajax.html" with page_obj=page_obj %}
     </div>
 </div>
 
+<!-- Кнопка "Загрузить ещё" -->
 {% if page_obj.has_next %}
     <div id="load-more" data-next-page="{{ page_obj.next_page_number }}">
         <div id="loading" style="display: none;">Загрузка...</div>
@@ -24,51 +38,58 @@
 <script>
     let isLoading = false;
 
-const loadMoreData = () => {
-    const loadMoreElement = document.getElementById('load-more');
-    if (!loadMoreElement) return;  // Прекращаем выполнение, если элемента нет
+    const loadMoreData = () => {
+        const loadMoreElement = document.getElementById('load-more');
+        if (!loadMoreElement) return;
 
-    const nextPage = loadMoreElement.getAttribute('data-next-page');
-    if (nextPage && !isLoading) {
-        isLoading = true;
+        const nextPage = loadMoreElement.getAttribute('data-next-page');
+        if (nextPage && !isLoading) {
+            isLoading = true;
 
-        const loadingElement = document.getElementById('loading');
-        if (loadingElement) {
-            loadingElement.style.display = 'block';
-        }
-
-        fetch(`?page=${nextPage}`, {
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-        .then(response => response.text())
-        .then(data => {
-            const bbContainer = document.getElementById('bb-container');
-            bbContainer.innerHTML += data;
-            const nextPageNumber = parseInt(nextPage) + 1;
-
-            if (nextPageNumber > {{ page_obj.paginator.num_pages }}) {
-                loadMoreElement.remove();
-            } else {
-                loadMoreElement.setAttribute('data-next-page', nextPageNumber);
-            }
-
-            isLoading = false;
-
+            const loadingElement = document.getElementById('loading');
             if (loadingElement) {
-                loadingElement.style.display = 'none';
+                loadingElement.style.display = 'block';
             }
-        });
-    }
-};
 
-window.addEventListener('scroll', () => {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-        loadMoreData();
-    }
-});
+            fetch(`?page=${nextPage}&keyword={{ form.keywords.value|urlencode }}`, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.text())
+            .then(data => {
+                const bbContainer = document.getElementById('bb-container');
+                bbContainer.innerHTML += data;
 
+                const nextPageNumber = parseInt(nextPage) + 1;
+
+                if (nextPageNumber > {{ page_obj.paginator.num_pages }}) {
+                    loadMoreElement.remove();
+                } else {
+                    loadMoreElement.setAttribute('data-next-page', nextPageNumber);
+                }
+
+                isLoading = false;
+
+                if (loadingElement) {
+                    loadingElement.style.display = 'none';
+                }
+            })
+            .catch(error => {
+                console.error('Error loading more data:', error);
+                isLoading = false;
+                if (loadingElement) {
+                    loadingElement.style.display = 'none';
+                }
+            });
+        }
+    };
+
+    window.addEventListener('scroll', () => {
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+            loadMoreData();
+        }
+    });
 </script>
 
 {% endblock %}
