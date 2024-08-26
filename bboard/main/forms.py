@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm, inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm
+from .compress import compress_image
 
 from .models import Bb, AdditionalImage, CustomUser, SuperLocation, SubLocation
 
@@ -19,28 +20,30 @@ class SubLocationForm(forms.ModelForm):
 
 
 class BbForm(forms.ModelForm):
-    image = forms.ImageField(required=False, label="Изображения")
+    images = forms.ImageField(
+        required=False,
+        label="Изображения",
+        widget=forms.FileInput(attrs={'multiple': False})  # Изменили ClearableFileInput на FileInput
+    )
 
     class Meta:
         model = Bb
         fields = ['rubric', 'title', 'content', 'price', 'currency', 'city']
-        widgets = {
-            'author': forms.HiddenInput,  # Скрытое поле для автора объявления
-        }
 
     def save(self, commit=True):
-        """Сохранение объявления и связанных изображений"""
-        bb = super().save(commit=False)
+        instance = super().save(commit=False)
+
         if commit:
-            bb.save()
+            instance.save()
 
-        # Сохранение изображений, если они были загружены
-        images = self.files.getlist('image')
-        AdditionalImage.objects.bulk_create(
-            [AdditionalImage(bb=bb, image=image) for image in images if image]
-        )
+        # Сохранение дополнительных изображений
+        images = self.files.getlist('images')
+        for image in images:
+            if image:
+                compressed_image = compress_image(image)
+                AdditionalImage.objects.create(bb=instance, image=compressed_image)
 
-        return bb
+        return instance
 
 
 # Набор форм для добавления/редактирования изображений, связанных с объявлением
