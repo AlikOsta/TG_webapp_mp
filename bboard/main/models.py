@@ -4,6 +4,7 @@ from datetime import timedelta
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.conf import settings
 from django.db.models import Avg
+import os
 
 # Модель для хранения рейтингов пользователей
 class Rating(models.Model):
@@ -100,9 +101,9 @@ class Bb(models.Model):
             self.is_active = False
             self.save(update_fields=['is_active'])
 
-    def delete(self, *args, **kwargs):
-        """Удаление всех связанных изображений перед удалением объявления"""
-        self.additional_images.all().delete()
+    def delete(self, *args, **kwargs) :
+        for ai in self.additional_images.all() :  # Используем related_name, если он есть
+            ai.delete()
         super().delete(*args, **kwargs)
 
     class Meta:
@@ -146,6 +147,11 @@ class AdditionalImage(models.Model):
 
     def __str__(self):
         return f"Изображение для {self.bb.title}"
+
+    def delete(self, *args, **kwargs) :
+        if self.image and os.path.isfile(self.image.path) :
+            os.remove(self.image.path)
+        super().delete(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Дополнительные изображения"

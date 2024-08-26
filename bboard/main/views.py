@@ -107,7 +107,6 @@ def detail(request, rubric_pk, pk):
         bb.is_favorite = False
 
     context = {'bb': bb}
-    print(bb.author.username)
     return render(request, 'main/detail.html', context)
 
 
@@ -176,8 +175,6 @@ def profile_bb_change(request, pk) :
         'formset': formset,
     }
     return render(request, 'main/profile_bb_change.html', context)
-
-
 
 
 def toggle_favorite(request, bb_pk):
