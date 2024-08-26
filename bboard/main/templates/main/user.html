@@ -55,7 +55,7 @@
             {% if user.image %}
                 <img class="img_card" src="{{ user.image.url }}" alt="User Image">
             {% else %}
-                <img class="img_card" src="{% static 'main/no_photo_user.png' %}" alt="Placeholder image">
+                <img class="img_card" src="{{ MEDIA_URL }}images/user/no_photo_user.png" alt="Placeholder image">
             {% endif %}
         </div>
     </div>

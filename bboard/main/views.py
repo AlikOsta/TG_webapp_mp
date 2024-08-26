@@ -107,6 +107,7 @@ def detail(request, rubric_pk, pk):
         bb.is_favorite = False
 
     context = {'bb': bb}
+    print(bb.author.username)
     return render(request, 'main/detail.html', context)
 
 
