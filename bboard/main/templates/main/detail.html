@@ -69,8 +69,8 @@
     <h4>Описание:</h4>
     <p> {{ bb.content }}</p>
 
+    <p class="footer_title">{{ bb.views }} просмотров</p>
     <p class="footer_title"> {{ bb.city }}, c {{ bb.published|date:"d.m.y" }}</p>
-    <p class="footer_title">10000 просмотров</p>
 
     <a href="{% url 'seller_list_bb' seller_id=bb.author.telegram_id %}">
         <div class="wrapper">

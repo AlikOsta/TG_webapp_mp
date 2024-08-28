@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.db.models import Q
 
-from .models import Bb, Rubric, Favorite, CustomUser
+from .models import Bb, Rubric, Favorite, CustomUser, AdView
 from .forms import BbForm, AiFormSet, ChaserUserInfoForm, SearchForm
 
 
@@ -97,6 +97,25 @@ def by_rubric(request, pk):
 def detail(request, rubric_pk, pk):
     bb = get_object_or_404(Bb, pk=pk)
     bb.check_expiration()
+
+    # Проверка уникального просмотра
+    if request.user.is_authenticated :
+        # Если пользователь авторизован, проверяем по пользователю и объявлению
+        viewed, created = AdView.objects.get_or_create(user=request.user, ad=bb)
+    else :
+        # Если пользователь анонимный, используем session_key
+        session_key = request.session.session_key
+        if not session_key :
+            # Создаем новую сессию, если она не существует
+            request.session.create()
+            session_key = request.session.session_key
+
+        viewed, created = AdView.objects.get_or_create(session_key=session_key, ad=bb)
+
+    # Если запись о просмотре была создана (то есть, просмотр уникальный), увеличиваем счетчик
+    if created :
+        bb.views += 1
+        bb.save(update_fields=['views'])
 
     if not bb.is_active:
         return render(request, 'main/404.html', status=404)

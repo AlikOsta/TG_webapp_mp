@@ -94,6 +94,7 @@ class Bb(models.Model):
     is_active = models.BooleanField(default=True, verbose_name='Активно')
     city = models.ForeignKey('SubLocation', null=True, on_delete=models.PROTECT, verbose_name='Город')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Автор')
+    views = models.PositiveIntegerField(default=0, verbose_name='Просмотры')
 
     def check_expiration(self):
         """Деактивация объявления, если оно просрочено"""
@@ -217,3 +218,13 @@ class Favorite(models.Model):
 
     def __str__(self):
         return f"{self.user.username} добавил {self.bb.title} в избранное"
+
+
+class AdView(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    ad = models.ForeignKey('Bb', on_delete=models.CASCADE)
+    session_key = models.CharField(max_length=40, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'ad', 'session_key')
