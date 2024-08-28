@@ -208,3 +208,14 @@ def favorites(request):
         'favorite_list': favorite_list
     }
     return render(request, 'main/favorites.html', context)
+
+
+def seller_list_bb(request, seller_id):
+    seller = get_object_or_404(CustomUser, telegram_id=seller_id)
+    listings = Bb.objects.filter(author=seller, is_active=True).select_related('rubric', 'currency').prefetch_related('additional_images')
+
+    context = {
+        'seller': seller,
+        'listings': listings,
+    }
+    return render(request, 'main/user_listings.html', context)

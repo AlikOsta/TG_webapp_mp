@@ -5,7 +5,8 @@ from django.conf.urls.static import static
 from .views import (
     index, by_rubric, BbCreateView, detail,
     favorites, user, ChangeUserInfoView,
-    profile_bb_delete, profile_bb_change, toggle_favorite
+    profile_bb_delete, profile_bb_change, toggle_favorite,
+    seller_list_bb,
 )
 from .utils import user_view
 
@@ -27,6 +28,9 @@ urlpatterns = [
     path('user/change/', ChangeUserInfoView.as_view(), name='user_change'),  # изменение данных пользователя
     path('profile/edit/<int:pk>/', profile_bb_change, name='profile_bb_change'),  # редактирование объявления
     path('profile/delete/<int:pk>/', profile_bb_delete, name='profile_bb_delete'),  # удаление объявления
+
+    # продавец
+    path('seller/<int:seller_id>/', seller_list_bb, name='seller_list_bb'),
 
     # Взаимодействие с Telegram
     path('web-app/', user_view, name='web-app'),  # получение данных от Telegram
