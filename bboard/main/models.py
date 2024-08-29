@@ -95,6 +95,7 @@ class Bb(models.Model):
     city = models.ForeignKey('SubLocation', null=True, on_delete=models.PROTECT, verbose_name='Город')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Автор')
     views = models.PositiveIntegerField(default=0, verbose_name='Просмотры')
+    is_premium = models.BooleanField(default=False, verbose_name='Премиум')
 
     def check_expiration(self):
         """Деактивация объявления, если оно просрочено"""

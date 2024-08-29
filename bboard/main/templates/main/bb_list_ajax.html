@@ -2,7 +2,7 @@
 
 {% for bb in page_obj %}
     <a class="link_card" href="{% url 'detail' rubric_pk=bb.rubric.pk pk=bb.pk %}">
-        <div class="card">
+        <div class="card" style="{% if bb.is_premium %}background-color: #fafa92;{% endif %}">
             {% if bb.additional_images.exists %}
                 <div class="image-gallery">
                     <img class="img_card" src="{{ bb.additional_images.first.image.url }}" alt="First additional image">

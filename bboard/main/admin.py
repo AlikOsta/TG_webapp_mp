@@ -59,11 +59,12 @@ class SubLocationAdmin(admin.ModelAdmin):
 @admin.register(Bb)
 class BbAdmin(admin.ModelAdmin):
     inlines = [AdditionalImageInline]
-    list_display = ('title', 'content', 'price', 'published', 'rubric', "is_active", 'author')
+    list_display = ('title', 'content', 'price', 'published', 'rubric', "is_active", 'author', 'is_premium', 'views')
     list_display_links = ('title', 'content')
-    search_fields = ('title', 'content')
+    search_fields = ('title', 'content', 'is_premium')
     list_filter = ('author', 'rubric', 'city')
     ordering = ('-published',)
+
 
 # Регистрация остальных моделей без кастомизации
 admin.site.register(Rubric)

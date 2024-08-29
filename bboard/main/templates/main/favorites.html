@@ -13,7 +13,7 @@
     {% if user.favorites.all %}
         {% for favorite in user.favorites.all %}
             <a class="link_card" href="{% url 'detail' rubric_pk=favorite.bb.rubric.pk pk=favorite.bb.pk %}">
-                <div class="card">
+                <div class="card"">
                     {% if favorite.bb.additional_images.exists %}
                         <img class="img_card" src="{{ favorite.bb.additional_images.first.image.url }}" alt="First additional image">
                     {% else %}
